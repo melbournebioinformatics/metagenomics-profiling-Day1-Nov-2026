@@ -25,14 +25,14 @@ exercises: 25
 ## The profilers
 
 - Kraken2 and Bracken
-- MetaPhlAn
+- MetaPhlAn (we will not run this profiler during the workshop due, precomputed outputs will be provided)
 - mOTUs
-- sylph
+- sylph (we will not run this profiler during the workshop due, precomputed outputs will be provided)
 
 ## Running the pipeline
 
 ```bash
-cd ~/mbite/run
+cd /mnt/data/taxprofiler
 ./nextflow_launch.sh
 ```
 
@@ -41,16 +41,15 @@ or directly:
 ```bash
 nextflow run nf-core/taxprofiler \
   -r 2.0.1 \
-  -profile singularity \
+  -profile docker \
   --input samplesheet.csv \
   --databases databases_taxprofiler.csv \
-  --outdir ~/mbite/results/taxprofiler \
+  --outdir /mnt/data/taxprofiler/results \
   --perform_shortread_qc \
   --save_analysis_ready_fastqs \
   --run_kraken2 --run_bracken \
-  --run_metaphlan --run_motus --run_sylph \
+  --run_motus \
   --run_profile_standardisation \
-  --taxpasta_add_name --taxpasta_add_rank --taxpasta_add_lineage \
   --run_krona \
   -resume
 ```
@@ -58,12 +57,12 @@ nextflow run nf-core/taxprofiler \
 ## Output overview
 
 ```bash
-ls ~/mbite/results/taxprofiler
+ls /mnt/data/taxprofiler/results
 ```
 
 ```output
-analysis_ready_fastqs  bracken  fastp  kraken2  krona  metaphlan  motus
-multiqc  pipeline_info  sylph  taxpasta  ...
+analysis_ready_fastqs  bracken  fastp  kraken2  krona  motus
+multiqc  pipeline_info  
 ```
 
 ### MultiQC report
@@ -75,14 +74,44 @@ multiqc  pipeline_info  sylph  taxpasta  ...
 ```
 
 ### Taxonomic classification summaries
+The pipeline writes one folder per profiler into `results/`:
+
+```text
+results/
+├── kraken2
+│   ├── k2_standard_08_GB_20260626
+│   │   ├── Gut_sample1_Gut_sample1_run1_k2_standard_08_GB_20260626.kraken2.kraken2.report.txt
+│   │   ├── ...                                   (one report per sample)
+│   │   └── Gut_sample5_Gut_sample5_run1_k2_standard_08_GB_20260626.kraken2.kraken2.report.txt
+│   ├── k2_standard_08_GB_20260626_bracken
+│   ├── kraken2_k2_standard_08_GB_20260626_bracken-bracken_combined_reports.txt
+│   └── kraken2_k2_standard_08_GB_20260626_combined_reports.txt
+├── bracken
+│   ├── bracken_k2_standard_08_GB_20260626_bracken_combined_reports.txt
+│   └── k2_standard_08_GB_20260626_bracken
+│       ├── Gut_sample1_..._bracken.bracken.kraken2.report_bracken.txt
+│       ├── Gut_sample1_..._bracken.bracken.tsv
+│       └── ...                                   (two files per sample)
+├── motus
+│   ├── db_mOTU_v3.1.0
+│   │   ├── Gut_sample1_Gut_sample1_run1_db_mOTU_v3.1.0.log
+│   │   ├── Gut_sample1_Gut_sample1_run1_db_mOTU_v3.1.0.out
+│   │   └── ...                                   (.log + .out per sample)
+│   └── motus_db_mOTU_v3.1.0_combined_reports.txt
+└── taxpasta
+    ├── bracken_k2_standard_08_GB_20260626_bracken.tsv
+    ├── kraken2_k2_standard_08_GB_20260626_bracken-bracken.tsv
+    ├── kraken2_k2_standard_08_GB_20260626.tsv
+    ├── metaphlan_mpa_vJun23_CHOCOPhlAnSGB_202403.tsv
+    └── motus_db_mOTU_v3.1.0.tsv
+```
 
 ### Standardised and merged tables (Taxpasta)
 
 Taxpasta converts the output of each profiler into one merged table per profiler and database, with taxa in rows and samples in columns. The tables are in `taxpasta/`.
 
 ```bash
-ls ~/mbite/results/taxprofiler/taxpasta/
-head -n 5 ~/mbite/results/taxprofiler/taxpasta/bracken_k2_standard_08gb.tsv
+ls /mnt/data/taxprofilertaxprofiler/results/taxpasta/
 ```
 
 We import these tables into R in the episode Importing and exploring microbiome data with R.

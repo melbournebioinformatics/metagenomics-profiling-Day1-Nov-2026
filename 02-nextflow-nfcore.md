@@ -38,8 +38,12 @@ Pipelines are listed on the nf-core website. In this workshop we use:
 ## Connecting to Nectar
 
 ```bash
-# PENDING TO WRITE CODE
+ssh ubuntu@<IP_adress>
 ```
+::::::::::::::::::::::::::::::::::::: callout
+We already prepared the databases for this workshop. If you are following the workshop remotely, please download the databases 
+for each chosen tool as well as modify the path accordingly.
+:::::::::::::::::::::::::::::::::::::
 
 ## Loading the software
 
@@ -57,22 +61,24 @@ nf-core --version
 Both pipelines use the same samplesheet columns: `sample,run_accession,instrument_platform,fastq_1,fastq_2,fasta`. Paths must be absolute.
 
 ```bash
-mkdir -p ~/mbite/run && cd ~/mbite/run
+cd /mnt/data/taxprofiler
 
 echo "sample,run_accession,instrument_platform,fastq_1,fastq_2,fasta" > samplesheet.csv
 for i in 1 2 3 4 5; do
-  echo "gut${i},run1,ILLUMINA,$HOME/mbite/data/raw/Gut_sample${i}.left.fq.gz,$HOME/mbite/data/raw/Gut_sample${i}.right.fq.gz," >> samplesheet.csv
+  echo "gut${i},run1,ILLUMINA,/mnt/data/rawreads/Gut_sample${i}_sub_R1.fastq.gz,/mnt/data/rawreads/Gut_sample${i}_sub_R2.fastq.gz," >> samplesheet.csv
 done
 cat samplesheet.csv
 ```
 
+
+
 ```output
 sample,run_accession,instrument_platform,fastq_1,fastq_2,fasta
-gut1,run1,ILLUMINA,/home/ubuntu/mbite/data/raw/Gut_sample1.left.fq.gz,/home/ubuntu/mbite/data/raw/Gut_sample1.right.fq.gz,
-gut2,run1,ILLUMINA,/home/ubuntu/mbite/data/raw/Gut_sample2.left.fq.gz,/home/ubuntu/mbite/data/raw/Gut_sample2.right.fq.gz,
-gut3,run1,ILLUMINA,/home/ubuntu/mbite/data/raw/Gut_sample3.left.fq.gz,/home/ubuntu/mbite/data/raw/Gut_sample3.right.fq.gz,
-gut4,run1,ILLUMINA,/home/ubuntu/mbite/data/raw/Gut_sample4.left.fq.gz,/home/ubuntu/mbite/data/raw/Gut_sample4.right.fq.gz,
-gut5,run1,ILLUMINA,/home/ubuntu/mbite/data/raw/Gut_sample5.left.fq.gz,/home/ubuntu/mbite/data/raw/Gut_sample5.right.fq.gz,
+gut1,run1,ILLUMINA,/mnt/data/rawreads/Gut_sample1_sub_R1.fastq.gz,/mnt/data/rawreads/Gut_sample1_sub_R2.fastq.gz,
+gut2,run1,ILLUMINA,/mnt/data/rawreads/Gut_sample2_sub_R1.fastq.gz,/mnt/data/rawreads/Gut_sample2_sub_R2.fastq.gz,
+gut3,run1,ILLUMINA,/mnt/data/rawreads/Gut_sample3_sub_R1.fastq.gz,/mnt/data/rawreads/Gut_sample3_sub_R2.fastq.gz,
+gut4,run1,ILLUMINA,/mnt/data/rawreads/Gut_sample4_sub_R1.fastq.gz,/mnt/data/rawreads/Gut_sample4_sub_R2.fastq.gz,
+gut5,run1,ILLUMINA,/mnt/data/rawreads/Gut_sample5_sub_R1.fastq.gz,/mnt/data/rawreads/Gut_sample5_sub_R2.fastq.gz,
 ```
 
 Check that every file listed exists:
@@ -90,11 +96,9 @@ Columns are `tool,db_name,db_params,db_type,db_path`.
 ```bash
 cat > databases_taxprofiler.csv << 'EOF'
 tool,db_name,db_params,db_type,db_path
-kraken2,k2_standard_08gb,,short,/data/databases/kraken2/k2_standard_08gb
-bracken,k2_standard_08gb,;-r 150,short,/data/databases/kraken2/k2_standard_08gb
-metaphlan,mpa_vJun23,,short,/data/databases/metaphlan/mpa_vJun23_CHOCOPhlAnSGB_202403
-motus,motus_db,,short,/data/databases/motus/db_mOTU
-sylph,gtdb_r220,,short,/data/databases/sylph/gtdb-r220-c200-dbv1.syldb
+kraken2,k2_standard_08_GB_20260626,,short;long,/mnt/data/taxprofiler/databases/kraken2/k2_standard_08_GB_20260626
+bracken,k2_standard_08_GB_20260626_bracken,;-r 150,short,/mnt/data/taxprofiler/databases/kraken2/k2_standard_08_GB_20260626
+motus,db_mOTU_v3.1.0,,short;long,/mnt/data/taxprofiler/databases/motus/db_mOTU
 EOF
 ```
 
@@ -106,14 +110,34 @@ Columns are `tool,db_name,db_entity,db_params,db_path`. HUMAnN and eggNOG-mapper
 ```bash
 cat > databases_funcprofiler.csv << 'EOF'
 tool,db_name,db_entity,db_params,db_path
-humann_v3,humann_v3_uniref90,humann_metaphlan,,/data/databases/humann/metaphlan_vOct22
-humann_v3,humann_v3_uniref90,humann_nucleotide,,/data/databases/humann/chocophlan
-humann_v3,humann_v3_uniref90,humann_protein,,/data/databases/humann/uniref90_diamond
-humann_v3,humann_v3_uniref90,humann_utility,,/data/databases/humann/utility_mapping
-eggnogmapper,eggnog_v5,eggnogmapper_db,diamond,/data/databases/eggnog/eggnog_proteins.dmnd
-eggnogmapper,eggnog_v5,eggnogmapper_data_dir,,/data/databases/eggnog/data
+diamond,gut_workshop_v1,,,/mnt/data/funcprofiler/databases/diamond
 EOF
 ```
+
+## Set the pipeline’s resource limits
+Nextflow does not know how many CPUs and how much memory your machine has. Therefore, a config file is needed to cap
+every task at what your machine actually has, so no step asks for more and fails. We will create a config file for Nectar.
+Again, if you are following this workshop remotely, modify the parameters in the following code that match with your machine.
+
+```bash
+mkdir -p configs
+
+CPUS=$(nproc) #number of CPUs
+MEM=$(( $(free -g | awk '/^Mem:/{print $2}') - 2 )) #number of RAM minus 2 (always spare some for trivial tasks)
+
+cat > configs/nectar.config <<EOF
+workDir = '/mnt/data/taxprofiler/work'
+process {
+    resourceLimits = [ cpus: ${CPUS}, memory: '${MEM}.GB', time: '48.h' ]
+}
+executor {
+    name   = 'local'
+    cpus   = ${CPUS}
+    memory = '${MEM}.GB'
+}
+EOF
+```
+
 
 ## Reproducible launch commands
 
@@ -122,32 +146,33 @@ Parameters go in a `params.json` file and the command in a launch script.
 ```bash
 cat > params_taxprofiler.json << EOF
 {
-  "input": "$HOME/mbite/run/samplesheet.csv",
-  "databases": "$HOME/mbite/run/databases_taxprofiler.csv",
-  "outdir": "$HOME/mbite/results/taxprofiler",
+  "input": "/mnt/data/taxprofiler/samplesheet.csv",
+  "databases": "/mnt/data/taxprofiler/databases_taxprofiler.csv",
+  "outdir": "/mnt/data/taxprofiler/results",
   "perform_shortread_qc": true,
   "save_analysis_ready_fastqs": true,
   "run_kraken2": true,
   "run_bracken": true,
-  "run_metaphlan": true,
+  "run_metaphlan": false,
   "run_motus": true,
-  "run_sylph": true,
+  "run_sylph": false,
   "run_profile_standardisation": true,
   "run_krona": true,
-  "taxpasta_add_name": true,
-  "taxpasta_add_rank": true,
-  "taxpasta_add_lineage": true
+  "taxpasta_add_name": false,
+  "taxpasta_add_rank": false,
+  "taxpasta_add_lineage": false
 }
 EOF
 ```
 
 ```bash
-cat > nextflow_launch.sh << 'EOF'
+cat > nf_taxprofiler_launch.sh << 'EOF'
 #!/usr/bin/env bash
 set -euo pipefail
 nextflow run nf-core/taxprofiler \
-  -r <version> \
-  -profile singularity \
+  -r 2.0.1 \
+  -profile docker \
+  -c configs/nectar.config \
   -params-file params_taxprofiler.json \
   -resume
 EOF

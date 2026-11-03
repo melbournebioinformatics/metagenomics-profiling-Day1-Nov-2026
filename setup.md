@@ -2,68 +2,87 @@
 title: Setup
 ---
 
-Please complete these steps before the workshop. We use two computing environments:
+You do not need to install or download anything for this workshop. Everything runs on cloud instances on [Nectar](https://ardc.edu.au/services/ardc-nectar-research-cloud/)
+that the instructors set up for you. You only need a laptop with:
 
-- A Nectar cloud instance (provided by the organisers) to run the nf-core pipelines.
-- Your laptop, to connect to Nectar via SSH and to analyse the outputs in R/RStudio.
+- an **SSH client**, to connect to the Nectar instance on the command line. macOS and
+  Linux have one in the Terminal, while on Windows use PowerShell, Windows Terminal or
+  [MobaXterm](https://mobaxterm.mobatek.net/).
+- an up-to-date **web browser**, to use RStudio Server and open the pipeline reports.
 
-Software on the Nectar instance is pre-installed for workshop attendees.
+The instructors will give you the IP addresses, usernames and passwords on the day.
 
-## Software overview
+## Computing environments
 
-Laptop:
+| Part of the workshop | Where it runs | How you connect | What is pre-installed |
+|---|---|---|---|
+| Nextflow and nf-core pipelines (Day 1) | Nectar instance | SSH, command line | Java, Nextflow, Apptainer/Singularity, nf-core/taxprofiler, nf-core/funcprofiler, input data and reference databases |
+| Analysis in R (Day 1 and Day 2) | RStudio Server on Nectar | Web browser | R, RStudio, all R packages and the pipeline outputs needed for both days |
 
-- SSH client
-- R and RStudio Desktop
-- CRAN packages: readr, dplyr, tidyr, ggplot2, BiocManager
-- Bioconductor packages: SummarizedExperiment, TreeSummarizedExperiment, mia, miaViz, phyloseq
+### Connecting to the Nectar instance (command line)
 
-Nectar instance:
+```bash
+ssh <username>@<instance-IP>
+```
 
-- Java
-- Nextflow
-- Apptainer/Singularity or Docker
-- nf-core tools (optional)
-- nf-core/taxprofiler
-- nf-core/funcprofiler
+Enter the password when prompted. You should now see a prompt on the Nectar instance.
 
-## R and RStudio (laptop)
+### Connecting to RStudio Server (R)
 
-- Install R from CRAN.
-- Install RStudio Desktop.
-
-### R packages
-
-Run in the RStudio console:
+1. Open `http://<rstudio-IP>` in your web browser. The instructors will give you the address.
+2. Log in with your username and password.
+3. To check that everything is available, run in the RStudio console:
 
 ```r
-# CRAN packages
-install.packages(c("readr", "dplyr", "tidyr", "ggplot2", "BiocManager"))
-
-# Bioconductor packages
-BiocManager::install(c(
-  "SummarizedExperiment",
-  "TreeSummarizedExperiment",
-  "mia",
-  "miaViz",
-  "phyloseq"
-))
+library(mia)
+library(miaViz)
+packageVersion("mia")
+list.files("/data/workshop_data")
 ```
+
+You should see the mia version and the folders `funcprofiler`, `metadata` and
+`taxprofiler`.
 
 ## Data
 
-- 5 simulated human gut metagenomes, Illumina paired-end, from Sun, Huang et al. (2021) Nature Methods: https://www.nature.com/articles/s41592-021-01141-3
-- Source: figshare project 79916, dataset Gut_sample: https://doi.org/10.6084/m9.figshare.12234947.v1
-- 10 FASTQ files (`Gut_sampleX.fq.gz`) and 2 ground-truth tables (`5_gut_taxonomic_abd.txt`, `5_gut_sequence_abd.txt`)
-- Total size about 6.5 GB
+- 5 simulated human gut metagenomes, Illumina paired-end, from Sun, Huang et al. (2021)
+  *Challenges in benchmarking metagenomic profilers*. Nature Methods 18:618–626.
+  <https://doi.org/10.1038/s41592-021-01141-3>
+- Source: figshare project 79916, dataset Gut_sample:
+  <https://doi.org/10.6084/m9.figshare.12234947.v1>
+- 10 FASTQ files (`Gut_sampleN.left.fq.gz` and `Gut_sampleN.right.fq.gz`) and 2
+  ground-truth tables (`5_gut_taxonomic_abd.txt`, `5_gut_sequence_abd.txt`)
 
-On the workshop instances the data are already in `~/mbite/data/raw/`.
+On the workshop instances:
+
+- the raw reads are in `/mnt/data/taxprofiler/input/reads/` on the Nextflow instance
+- the pipeline outputs used in R are in `/data/workshop_data/` on the RStudio Server
 
 ## Reference databases
 
-- Kraken2 Standard-8
-- MetaPhlAn mpa_vJun23_CHOCOPhlAnSGB_202403
-- mOTUs database
-- sylph GTDB database
-- HUMAnN: ChocoPhlAn, UniRef90, utility mapping
-- eggNOG v5
+All databases are pre-installed on the Nextflow instance under `/mnt/data/taxprofiler/databases/` and `/mnt/data/funcprofiler/databases/`:
+
+- Kraken2 Standard-8 (`k2_standard_08_GB_20260626`)
+- MetaPhlAn `mpa_vJun23_CHOCOPhlAnSGB_202403`
+- mOTUs v3.1.0
+- sylph GTDB r220 (`gtdb_r220_c200`)
+- HUMAnN 4 databases
+- eggNOG 5.0.2
+
+:::::::::::::::::::::::::::::::::::::::::: spoiler
+
+### Running the R analysis on your own computer after the workshop
+
+The lesson uses R 4.6 and Bioconductor 3.23. To reproduce the R episodes on your own computer, install [R](https://cran.r-project.org/) and [RStudio Desktop](https://posit.co/download/rstudio-desktop/), then run:
+
+```r
+install.packages(c("readr", "dplyr", "tidyr", "ggplot2", "BiocManager"))
+BiocManager::install(version = "3.23")
+BiocManager::install(c("SummarizedExperiment", "TreeSummarizedExperiment",
+                       "mia", "miaViz"))
+```
+
+You will also need a copy of the pipeline outputs. Change `data_dir` in the R episodes
+to the folder where you saved them.
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
