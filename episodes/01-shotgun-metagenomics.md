@@ -38,6 +38,65 @@ title: 'Shotgun metagenomics data to study the microbiome'
 
 5 simulated human gut metagenomes from Sun, Huang et al. (2021), with paired-end reads, ground-truth abundance tables and sample metadata. The true composition of each sample is known.
 
+## Downloading the data and checking its integrity
+
+The reads are already on the Nectar instance, so we do not download them today. With your own projects you will usually start by downloading the data from a public repository, and the first thing to do after a download is to check that the files arrived complete and unchanged.
+
+::::::::::::::::::::::::::::::::::::: callout
+
+### We do not run this today
+
+The commands in this section show how you would download and check the data in any other situation. The full dataset is about 6.5 GB, which would take too long during the workshop.
+
+::::::::::::::::::::::::::::::::::::::::::::::::
+
+### Downloading with `wget`
+
+The full gut samples are in the figshare dataset [Gut_sample](https://doi.org/10.6084/m9.figshare.12234947.v1) (figshare project 79916). Each file on figshare has its own download link, which you can copy from the file's download button. `wget` downloads a file from a link, and `-O` sets the name of the saved file:
+
+```bash
+mkdir -p ~/raw_data && cd ~/raw_data
+wget -O Gut_sample1.fq.gz "https://figshare.com/ndownloader/files/<file_id>"
+```
+
+For sequencing data from the European Nucleotide Archive (ENA), the [ENA browser](https://www.ebi.ac.uk/ena/browser/) lists the FTP link of every FASTQ file of a project, and `wget` works the same way.
+
+### What an MD5 checksum is
+
+An MD5 checksum is a 32-character code calculated from the content of a file. If a single byte of the file changes, for example because a download was cut short, the checksum changes completely. Repositories publish the checksum of each file they host, so you can calculate the checksum of your copy and compare the two. figshare shows the MD5 of each file on the dataset page and in its API, and ENA lists it in the `fastq_md5` column of a project's file report.
+
+`md5sum` calculates the checksum of one or more files:
+
+```bash
+md5sum Gut_sample1.fq.gz
+```
+
+```output
+<32-character checksum>  Gut_sample1.fq.gz
+```
+
+### Checking many files at once
+
+Put the published checksums in a text file, one line per file, with the checksum, two spaces and the file name:
+
+```output
+<checksum of file 1>  Gut_sample1.fq.gz
+<checksum of file 2>  Gut_sample2.fq.gz
+```
+
+Then `md5sum -c` recalculates the checksum of every file in the list and compares it with the published one:
+
+```bash
+md5sum -c md5sums.txt
+```
+
+```output
+Gut_sample1.fq.gz: OK
+Gut_sample2.fq.gz: OK
+```
+
+Any file reported as `FAILED` is damaged or incomplete and should be downloaded again. Keep `md5sums.txt` with your raw data: it lets you, or anyone else, check later that the files have not changed.
+
 ## First look at the reads
 
 The reads for this workshop are already on the Nectar instance, in `/mnt/data/rawreads/`. There are two compressed FASTQ files per sample: `_R1` and `_R2` hold the two reads of each pair.
