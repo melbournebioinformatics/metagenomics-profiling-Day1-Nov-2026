@@ -364,7 +364,7 @@
         
 <section id="aio-01-shotgun-metagenomics"><p>Content from <a href="01-shotgun-metagenomics.html">Shotgun metagenomics data to study the microbiome</a></p>
 <hr>
-<p>Last updated on 2026-10-27 |
+<p>Last updated on 2026-11-03 |
 
         <a href="https://github.com/cladigar/metagen-taxon-function/edit/main/episodes/01-shotgun-metagenomics.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -469,7 +469,7 @@ any links that you are not going to use.
  -->
 </section></section><section id="aio-02-nextflow-nfcore"><p>Content from <a href="02-nextflow-nfcore.html">Reproducible workflows with Nextflow and nf-core</a></p>
 <hr>
-<p>Last updated on 2026-10-27 |
+<p>Last updated on 2026-11-03 |
 
         <a href="https://github.com/cladigar/metagen-taxon-function/edit/main/episodes/02-nextflow-nfcore.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -531,7 +531,20 @@ use:</p>
 <div class="codewrapper sourceCode" id="cb1">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1" aria-label="code-block-1-1"></a><span class="co"># PENDING TO WRITE CODE</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1" aria-label="code-block-1-1"></a><span class="fu">ssh</span> ubuntu@<span class="op">&lt;</span>IP_adress<span class="op">&gt;</span></span></code></pre>
+</div>
+<div id="callout1" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div class="callout-inner">
+<div class="callout-content">
+<p>We already prepared the databases for this workshop. If you are
+following the workshop remotely, please download the databases for each
+chosen tool as well as modify the path accordingly.</p>
+</div>
+</div>
 </div>
 </section><section><h2 class="section-heading" id="loading-the-software">Loading the software<a class="anchor" aria-label="anchor" href="#loading-the-software"></a>
 </h2>
@@ -554,11 +567,11 @@ Paths must be absolute.</p>
 <div class="codewrapper sourceCode" id="cb3">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1" aria-label="code-block-3-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ~/mbite/run <span class="kw">&amp;&amp;</span> <span class="bu">cd</span> ~/mbite/run</span>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1" aria-label="code-block-3-1"></a><span class="bu">cd</span> /mnt/data/taxprofiler</span>
 <span id="cb3-2"><a href="#cb3-2" tabindex="-1" aria-label="code-block-3-2"></a></span>
 <span id="cb3-3"><a href="#cb3-3" tabindex="-1" aria-label="code-block-3-3"></a><span class="bu">echo</span> <span class="st">"sample,run_accession,instrument_platform,fastq_1,fastq_2,fasta"</span> <span class="op">&gt;</span> samplesheet.csv</span>
 <span id="cb3-4"><a href="#cb3-4" tabindex="-1" aria-label="code-block-3-4"></a><span class="cf">for</span> i <span class="kw">in</span> 1 2 3 4 5<span class="kw">;</span> <span class="cf">do</span></span>
-<span id="cb3-5"><a href="#cb3-5" tabindex="-1" aria-label="code-block-3-5"></a>  <span class="bu">echo</span> <span class="st">"gut</span><span class="va">${i}</span><span class="st">,run1,ILLUMINA,</span><span class="va">$HOME</span><span class="st">/mbite/data/raw/Gut_sample</span><span class="va">${i}</span><span class="st">.left.fq.gz,</span><span class="va">$HOME</span><span class="st">/mbite/data/raw/Gut_sample</span><span class="va">${i}</span><span class="st">.right.fq.gz,"</span> <span class="op">&gt;&gt;</span> samplesheet.csv</span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1" aria-label="code-block-3-5"></a>  <span class="bu">echo</span> <span class="st">"gut</span><span class="va">${i}</span><span class="st">,run1,ILLUMINA,/mnt/data/rawreads/Gut_sample</span><span class="va">${i}</span><span class="st">_sub_R1.fastq.gz,/mnt/data/rawreads/Gut_sample</span><span class="va">${i}</span><span class="st">_sub_R2.fastq.gz,"</span> <span class="op">&gt;&gt;</span> samplesheet.csv</span>
 <span id="cb3-6"><a href="#cb3-6" tabindex="-1" aria-label="code-block-3-6"></a><span class="cf">done</span></span>
 <span id="cb3-7"><a href="#cb3-7" tabindex="-1" aria-label="code-block-3-7"></a><span class="fu">cat</span> samplesheet.csv</span></code></pre>
 </div>
@@ -566,11 +579,11 @@ Paths must be absolute.</p>
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="output" tabindex="0"><code>sample,run_accession,instrument_platform,fastq_1,fastq_2,fasta
-gut1,run1,ILLUMINA,/home/ubuntu/mbite/data/raw/Gut_sample1.left.fq.gz,/home/ubuntu/mbite/data/raw/Gut_sample1.right.fq.gz,
-gut2,run1,ILLUMINA,/home/ubuntu/mbite/data/raw/Gut_sample2.left.fq.gz,/home/ubuntu/mbite/data/raw/Gut_sample2.right.fq.gz,
-gut3,run1,ILLUMINA,/home/ubuntu/mbite/data/raw/Gut_sample3.left.fq.gz,/home/ubuntu/mbite/data/raw/Gut_sample3.right.fq.gz,
-gut4,run1,ILLUMINA,/home/ubuntu/mbite/data/raw/Gut_sample4.left.fq.gz,/home/ubuntu/mbite/data/raw/Gut_sample4.right.fq.gz,
-gut5,run1,ILLUMINA,/home/ubuntu/mbite/data/raw/Gut_sample5.left.fq.gz,/home/ubuntu/mbite/data/raw/Gut_sample5.right.fq.gz,</code></pre>
+gut1,run1,ILLUMINA,/mnt/data/rawreads/Gut_sample1_sub_R1.fastq.gz,/mnt/data/rawreads/Gut_sample1_sub_R2.fastq.gz,
+gut2,run1,ILLUMINA,/mnt/data/rawreads/Gut_sample2_sub_R1.fastq.gz,/mnt/data/rawreads/Gut_sample2_sub_R2.fastq.gz,
+gut3,run1,ILLUMINA,/mnt/data/rawreads/Gut_sample3_sub_R1.fastq.gz,/mnt/data/rawreads/Gut_sample3_sub_R2.fastq.gz,
+gut4,run1,ILLUMINA,/mnt/data/rawreads/Gut_sample4_sub_R1.fastq.gz,/mnt/data/rawreads/Gut_sample4_sub_R2.fastq.gz,
+gut5,run1,ILLUMINA,/mnt/data/rawreads/Gut_sample5_sub_R1.fastq.gz,/mnt/data/rawreads/Gut_sample5_sub_R2.fastq.gz,</code></pre>
 </div>
 <p>Check that every file listed exists:</p>
 <div class="codewrapper sourceCode" id="cb5">
@@ -591,12 +604,10 @@ gut5,run1,ILLUMINA,/home/ubuntu/mbite/data/raw/Gut_sample5.left.fq.gz,/home/ubun
 </h3>
 <pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" tabindex="-1" aria-label="code-block-6-1"></a><span class="fu">cat</span> <span class="op">&gt;</span> databases_taxprofiler.csv <span class="op">&lt;&lt; 'EOF'</span></span>
 <span id="cb6-2"><a href="#cb6-2" tabindex="-1" aria-label="code-block-6-2"></a><span class="st">tool,db_name,db_params,db_type,db_path</span></span>
-<span id="cb6-3"><a href="#cb6-3" tabindex="-1" aria-label="code-block-6-3"></a><span class="st">kraken2,k2_standard_08gb,,short,/data/databases/kraken2/k2_standard_08gb</span></span>
-<span id="cb6-4"><a href="#cb6-4" tabindex="-1" aria-label="code-block-6-4"></a><span class="st">bracken,k2_standard_08gb,;-r 150,short,/data/databases/kraken2/k2_standard_08gb</span></span>
-<span id="cb6-5"><a href="#cb6-5" tabindex="-1" aria-label="code-block-6-5"></a><span class="st">metaphlan,mpa_vJun23,,short,/data/databases/metaphlan/mpa_vJun23_CHOCOPhlAnSGB_202403</span></span>
-<span id="cb6-6"><a href="#cb6-6" tabindex="-1" aria-label="code-block-6-6"></a><span class="st">motus,motus_db,,short,/data/databases/motus/db_mOTU</span></span>
-<span id="cb6-7"><a href="#cb6-7" tabindex="-1" aria-label="code-block-6-7"></a><span class="st">sylph,gtdb_r220,,short,/data/databases/sylph/gtdb-r220-c200-dbv1.syldb</span></span>
-<span id="cb6-8"><a href="#cb6-8" tabindex="-1" aria-label="code-block-6-8"></a><span class="op">EOF</span></span></code></pre>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1" aria-label="code-block-6-3"></a><span class="st">kraken2,k2_standard_08_GB_20260626,,short;long,/mnt/data/taxprofiler/databases/kraken2/k2_standard_08_GB_20260626</span></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1" aria-label="code-block-6-4"></a><span class="st">bracken,k2_standard_08_GB_20260626_bracken,;-r 150,short,/mnt/data/taxprofiler/databases/kraken2/k2_standard_08_GB_20260626</span></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1" aria-label="code-block-6-5"></a><span class="st">motus,db_mOTU_v3.1.0,,short;long,/mnt/data/taxprofiler/databases/motus/db_mOTU</span></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1" aria-label="code-block-6-6"></a><span class="op">EOF</span></span></code></pre>
 </div>
 </div>
 <div class="section level3">
@@ -610,63 +621,88 @@ HUMAnN and eggNOG-mapper need one row per database component.</p>
 </h3>
 <pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" tabindex="-1" aria-label="code-block-7-1"></a><span class="fu">cat</span> <span class="op">&gt;</span> databases_funcprofiler.csv <span class="op">&lt;&lt; 'EOF'</span></span>
 <span id="cb7-2"><a href="#cb7-2" tabindex="-1" aria-label="code-block-7-2"></a><span class="st">tool,db_name,db_entity,db_params,db_path</span></span>
-<span id="cb7-3"><a href="#cb7-3" tabindex="-1" aria-label="code-block-7-3"></a><span class="st">humann_v3,humann_v3_uniref90,humann_metaphlan,,/data/databases/humann/metaphlan_vOct22</span></span>
-<span id="cb7-4"><a href="#cb7-4" tabindex="-1" aria-label="code-block-7-4"></a><span class="st">humann_v3,humann_v3_uniref90,humann_nucleotide,,/data/databases/humann/chocophlan</span></span>
-<span id="cb7-5"><a href="#cb7-5" tabindex="-1" aria-label="code-block-7-5"></a><span class="st">humann_v3,humann_v3_uniref90,humann_protein,,/data/databases/humann/uniref90_diamond</span></span>
-<span id="cb7-6"><a href="#cb7-6" tabindex="-1" aria-label="code-block-7-6"></a><span class="st">humann_v3,humann_v3_uniref90,humann_utility,,/data/databases/humann/utility_mapping</span></span>
-<span id="cb7-7"><a href="#cb7-7" tabindex="-1" aria-label="code-block-7-7"></a><span class="st">eggnogmapper,eggnog_v5,eggnogmapper_db,diamond,/data/databases/eggnog/eggnog_proteins.dmnd</span></span>
-<span id="cb7-8"><a href="#cb7-8" tabindex="-1" aria-label="code-block-7-8"></a><span class="st">eggnogmapper,eggnog_v5,eggnogmapper_data_dir,,/data/databases/eggnog/data</span></span>
-<span id="cb7-9"><a href="#cb7-9" tabindex="-1" aria-label="code-block-7-9"></a><span class="op">EOF</span></span></code></pre>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1" aria-label="code-block-7-3"></a><span class="st">diamond,gut_workshop_v1,,,/mnt/data/funcprofiler/databases/diamond</span></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1" aria-label="code-block-7-4"></a><span class="op">EOF</span></span></code></pre>
 </div>
+</div>
+</section><section><h2 class="section-heading" id="set-the-pipelines-resource-limits">Set the pipeline’s resource limits<a class="anchor" aria-label="anchor" href="#set-the-pipelines-resource-limits"></a>
+</h2>
+<hr class="half-width">
+<p>Nextflow does not know how many CPUs and how much memory your machine
+has. Therefore, a config file is needed to cap every task at what your
+machine actually has, so no step asks for more and fails. We will create
+a config file for Nectar. Again, if you are following this workshop
+remotely, modify the parameters in the following code that match with
+your machine.</p>
+<div class="codewrapper sourceCode" id="cb8">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" tabindex="-1" aria-label="code-block-8-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> configs</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1" aria-label="code-block-8-2"></a></span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1" aria-label="code-block-8-3"></a><span class="va">CPUS</span><span class="op">=</span><span class="va">$(</span><span class="fu">nproc</span><span class="va">)</span> <span class="co">#number of CPUs</span></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1" aria-label="code-block-8-4"></a><span class="va">MEM</span><span class="op">=</span><span class="va">$((</span> <span class="va">$(</span><span class="fu">free</span> <span class="at">-g</span> <span class="kw">|</span> <span class="fu">awk</span> <span class="st">'/^Mem:/{print $2}'</span><span class="va">)</span> <span class="op">-</span> <span class="dv">2</span> <span class="va">))</span> <span class="co">#number of RAM minus 2 (always spare some for trivial tasks)</span></span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1" aria-label="code-block-8-5"></a></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1" aria-label="code-block-8-6"></a><span class="fu">cat</span> <span class="op">&gt;</span> configs/nectar.config <span class="op">&lt;&lt;EOF</span></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1" aria-label="code-block-8-7"></a><span class="st">workDir = '/mnt/data/taxprofiler/work'</span></span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1" aria-label="code-block-8-8"></a><span class="st">process {</span></span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1" aria-label="code-block-8-9"></a><span class="st">    resourceLimits = [ cpus: </span><span class="va">${CPUS}</span><span class="st">, memory: '</span><span class="va">${MEM}</span><span class="st">.GB', time: '48.h' ]</span></span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1" aria-label="code-block-8-10"></a><span class="st">}</span></span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1" aria-label="code-block-8-11"></a><span class="st">executor {</span></span>
+<span id="cb8-12"><a href="#cb8-12" tabindex="-1" aria-label="code-block-8-12"></a><span class="st">    name   = 'local'</span></span>
+<span id="cb8-13"><a href="#cb8-13" tabindex="-1" aria-label="code-block-8-13"></a><span class="st">    cpus   = </span><span class="va">${CPUS}</span></span>
+<span id="cb8-14"><a href="#cb8-14" tabindex="-1" aria-label="code-block-8-14"></a><span class="st">    memory = '</span><span class="va">${MEM}</span><span class="st">.GB'</span></span>
+<span id="cb8-15"><a href="#cb8-15" tabindex="-1" aria-label="code-block-8-15"></a><span class="st">}</span></span>
+<span id="cb8-16"><a href="#cb8-16" tabindex="-1" aria-label="code-block-8-16"></a><span class="op">EOF</span></span></code></pre>
 </div>
 </section><section><h2 class="section-heading" id="reproducible-launch-commands">Reproducible launch commands<a class="anchor" aria-label="anchor" href="#reproducible-launch-commands"></a>
 </h2>
 <hr class="half-width">
 <p>Parameters go in a <code>params.json</code> file and the command in a
 launch script.</p>
-<div class="codewrapper sourceCode" id="cb8">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" tabindex="-1" aria-label="code-block-8-1"></a><span class="fu">cat</span> <span class="op">&gt;</span> params_taxprofiler.json <span class="op">&lt;&lt; EOF</span></span>
-<span id="cb8-2"><a href="#cb8-2" tabindex="-1" aria-label="code-block-8-2"></a><span class="st">{</span></span>
-<span id="cb8-3"><a href="#cb8-3" tabindex="-1" aria-label="code-block-8-3"></a><span class="st">  "input": "</span><span class="va">$HOME</span><span class="st">/mbite/run/samplesheet.csv",</span></span>
-<span id="cb8-4"><a href="#cb8-4" tabindex="-1" aria-label="code-block-8-4"></a><span class="st">  "databases": "</span><span class="va">$HOME</span><span class="st">/mbite/run/databases_taxprofiler.csv",</span></span>
-<span id="cb8-5"><a href="#cb8-5" tabindex="-1" aria-label="code-block-8-5"></a><span class="st">  "outdir": "</span><span class="va">$HOME</span><span class="st">/mbite/results/taxprofiler",</span></span>
-<span id="cb8-6"><a href="#cb8-6" tabindex="-1" aria-label="code-block-8-6"></a><span class="st">  "perform_shortread_qc": true,</span></span>
-<span id="cb8-7"><a href="#cb8-7" tabindex="-1" aria-label="code-block-8-7"></a><span class="st">  "save_analysis_ready_fastqs": true,</span></span>
-<span id="cb8-8"><a href="#cb8-8" tabindex="-1" aria-label="code-block-8-8"></a><span class="st">  "run_kraken2": true,</span></span>
-<span id="cb8-9"><a href="#cb8-9" tabindex="-1" aria-label="code-block-8-9"></a><span class="st">  "run_bracken": true,</span></span>
-<span id="cb8-10"><a href="#cb8-10" tabindex="-1" aria-label="code-block-8-10"></a><span class="st">  "run_metaphlan": true,</span></span>
-<span id="cb8-11"><a href="#cb8-11" tabindex="-1" aria-label="code-block-8-11"></a><span class="st">  "run_motus": true,</span></span>
-<span id="cb8-12"><a href="#cb8-12" tabindex="-1" aria-label="code-block-8-12"></a><span class="st">  "run_sylph": true,</span></span>
-<span id="cb8-13"><a href="#cb8-13" tabindex="-1" aria-label="code-block-8-13"></a><span class="st">  "run_profile_standardisation": true,</span></span>
-<span id="cb8-14"><a href="#cb8-14" tabindex="-1" aria-label="code-block-8-14"></a><span class="st">  "run_krona": true,</span></span>
-<span id="cb8-15"><a href="#cb8-15" tabindex="-1" aria-label="code-block-8-15"></a><span class="st">  "taxpasta_add_name": true,</span></span>
-<span id="cb8-16"><a href="#cb8-16" tabindex="-1" aria-label="code-block-8-16"></a><span class="st">  "taxpasta_add_rank": true,</span></span>
-<span id="cb8-17"><a href="#cb8-17" tabindex="-1" aria-label="code-block-8-17"></a><span class="st">  "taxpasta_add_lineage": true</span></span>
-<span id="cb8-18"><a href="#cb8-18" tabindex="-1" aria-label="code-block-8-18"></a><span class="st">}</span></span>
-<span id="cb8-19"><a href="#cb8-19" tabindex="-1" aria-label="code-block-8-19"></a><span class="op">EOF</span></span></code></pre>
-</div>
 <div class="codewrapper sourceCode" id="cb9">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" tabindex="-1" aria-label="code-block-9-1"></a><span class="fu">cat</span> <span class="op">&gt;</span> nextflow_launch.sh <span class="op">&lt;&lt; 'EOF'</span></span>
-<span id="cb9-2"><a href="#cb9-2" tabindex="-1" aria-label="code-block-9-2"></a><span class="st">#!/usr/bin/env bash</span></span>
-<span id="cb9-3"><a href="#cb9-3" tabindex="-1" aria-label="code-block-9-3"></a><span class="st">set -euo pipefail</span></span>
-<span id="cb9-4"><a href="#cb9-4" tabindex="-1" aria-label="code-block-9-4"></a><span class="st">nextflow run nf-core/taxprofiler \</span></span>
-<span id="cb9-5"><a href="#cb9-5" tabindex="-1" aria-label="code-block-9-5"></a><span class="st">  -r &lt;version&gt; \</span></span>
-<span id="cb9-6"><a href="#cb9-6" tabindex="-1" aria-label="code-block-9-6"></a><span class="st">  -profile singularity \</span></span>
-<span id="cb9-7"><a href="#cb9-7" tabindex="-1" aria-label="code-block-9-7"></a><span class="st">  -params-file params_taxprofiler.json \</span></span>
-<span id="cb9-8"><a href="#cb9-8" tabindex="-1" aria-label="code-block-9-8"></a><span class="st">  -resume</span></span>
-<span id="cb9-9"><a href="#cb9-9" tabindex="-1" aria-label="code-block-9-9"></a><span class="op">EOF</span></span>
-<span id="cb9-10"><a href="#cb9-10" tabindex="-1" aria-label="code-block-9-10"></a><span class="fu">chmod</span> +x nextflow_launch.sh</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" tabindex="-1" aria-label="code-block-9-1"></a><span class="fu">cat</span> <span class="op">&gt;</span> params_taxprofiler.json <span class="op">&lt;&lt; EOF</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1" aria-label="code-block-9-2"></a><span class="st">{</span></span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1" aria-label="code-block-9-3"></a><span class="st">  "input": "/mnt/data/taxprofiler/samplesheet.csv",</span></span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1" aria-label="code-block-9-4"></a><span class="st">  "databases": "/mnt/data/taxprofiler/databases_taxprofiler.csv",</span></span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1" aria-label="code-block-9-5"></a><span class="st">  "outdir": "/mnt/data/taxprofiler/results",</span></span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1" aria-label="code-block-9-6"></a><span class="st">  "perform_shortread_qc": true,</span></span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1" aria-label="code-block-9-7"></a><span class="st">  "save_analysis_ready_fastqs": true,</span></span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1" aria-label="code-block-9-8"></a><span class="st">  "run_kraken2": true,</span></span>
+<span id="cb9-9"><a href="#cb9-9" tabindex="-1" aria-label="code-block-9-9"></a><span class="st">  "run_bracken": true,</span></span>
+<span id="cb9-10"><a href="#cb9-10" tabindex="-1" aria-label="code-block-9-10"></a><span class="st">  "run_metaphlan": false,</span></span>
+<span id="cb9-11"><a href="#cb9-11" tabindex="-1" aria-label="code-block-9-11"></a><span class="st">  "run_motus": true,</span></span>
+<span id="cb9-12"><a href="#cb9-12" tabindex="-1" aria-label="code-block-9-12"></a><span class="st">  "run_sylph": false,</span></span>
+<span id="cb9-13"><a href="#cb9-13" tabindex="-1" aria-label="code-block-9-13"></a><span class="st">  "run_profile_standardisation": true,</span></span>
+<span id="cb9-14"><a href="#cb9-14" tabindex="-1" aria-label="code-block-9-14"></a><span class="st">  "run_krona": true,</span></span>
+<span id="cb9-15"><a href="#cb9-15" tabindex="-1" aria-label="code-block-9-15"></a><span class="st">  "taxpasta_add_name": false,</span></span>
+<span id="cb9-16"><a href="#cb9-16" tabindex="-1" aria-label="code-block-9-16"></a><span class="st">  "taxpasta_add_rank": false,</span></span>
+<span id="cb9-17"><a href="#cb9-17" tabindex="-1" aria-label="code-block-9-17"></a><span class="st">  "taxpasta_add_lineage": false</span></span>
+<span id="cb9-18"><a href="#cb9-18" tabindex="-1" aria-label="code-block-9-18"></a><span class="st">}</span></span>
+<span id="cb9-19"><a href="#cb9-19" tabindex="-1" aria-label="code-block-9-19"></a><span class="op">EOF</span></span></code></pre>
 </div>
-<p>Alternatively, the nf-core tools launcher writes a
-<code>nf-params.json</code> interactively:</p>
 <div class="codewrapper sourceCode" id="cb10">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" tabindex="-1" aria-label="code-block-10-1"></a><span class="ex">nf-core</span> pipelines launch nf-core/taxprofiler <span class="at">-r</span> <span class="op">&lt;</span>version<span class="op">&gt;</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" tabindex="-1" aria-label="code-block-10-1"></a><span class="fu">cat</span> <span class="op">&gt;</span> nf_taxprofiler_launch.sh <span class="op">&lt;&lt; 'EOF'</span></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1" aria-label="code-block-10-2"></a><span class="st">#!/usr/bin/env bash</span></span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1" aria-label="code-block-10-3"></a><span class="st">set -euo pipefail</span></span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1" aria-label="code-block-10-4"></a><span class="st">nextflow run nf-core/taxprofiler \</span></span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1" aria-label="code-block-10-5"></a><span class="st">  -r 2.0.1 \</span></span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1" aria-label="code-block-10-6"></a><span class="st">  -profile docker \</span></span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1" aria-label="code-block-10-7"></a><span class="st">  -c configs/nectar.config \</span></span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1" aria-label="code-block-10-8"></a><span class="st">  -params-file params_taxprofiler.json \</span></span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1" aria-label="code-block-10-9"></a><span class="st">  -resume</span></span>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1" aria-label="code-block-10-10"></a><span class="op">EOF</span></span>
+<span id="cb10-11"><a href="#cb10-11" tabindex="-1" aria-label="code-block-10-11"></a><span class="fu">chmod</span> +x nextflow_launch.sh</span></code></pre>
+</div>
+<p>Alternatively, the nf-core tools launcher writes a
+<code>nf-params.json</code> interactively:</p>
+<div class="codewrapper sourceCode" id="cb11">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" tabindex="-1" aria-label="code-block-11-1"></a><span class="ex">nf-core</span> pipelines launch nf-core/taxprofiler <span class="at">-r</span> <span class="op">&lt;</span>version<span class="op">&gt;</span></span></code></pre>
 </div>
 <div id="keypoints1" class="callout keypoints">
 <div class="callout-square">
@@ -693,7 +729,7 @@ any links that you are not going to use.
  -->
 </section></section><section id="aio-03-taxprofiler"><p>Content from <a href="03-taxprofiler.html">Taxonomic profiling with nf-core/taxprofiler</a></p>
 <hr>
-<p>Last updated on 2026-10-27 |
+<p>Last updated on 2026-11-03 |
 
         <a href="https://github.com/cladigar/metagen-taxon-function/edit/main/episodes/03-taxprofiler.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 70 minutes</p>
@@ -739,16 +775,18 @@ analysis</li>
 <hr class="half-width">
 <ul>
 <li>Kraken2 and Bracken</li>
-<li>MetaPhlAn</li>
+<li>MetaPhlAn (we will not run this profiler during the workshop due,
+precomputed outputs will be provided)</li>
 <li>mOTUs</li>
-<li>sylph</li>
+<li>sylph (we will not run this profiler during the workshop due,
+precomputed outputs will be provided)</li>
 </ul></section><section><h2 class="section-heading" id="running-the-pipeline">Running the pipeline<a class="anchor" aria-label="anchor" href="#running-the-pipeline"></a>
 </h2>
 <hr class="half-width">
 <div class="codewrapper sourceCode" id="cb1">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1" aria-label="code-block-1-1"></a><span class="bu">cd</span> ~/mbite/run</span>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1" aria-label="code-block-1-1"></a><span class="bu">cd</span> /mnt/data/taxprofiler</span>
 <span id="cb1-2"><a href="#cb1-2" tabindex="-1" aria-label="code-block-1-2"></a><span class="ex">./nextflow_launch.sh</span></span></code></pre>
 </div>
 <p>or directly:</p>
@@ -757,18 +795,17 @@ analysis</li>
 </h3>
 <pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1" aria-label="code-block-2-1"></a><span class="ex">nextflow</span> run nf-core/taxprofiler <span class="dt">\</span></span>
 <span id="cb2-2"><a href="#cb2-2" tabindex="-1" aria-label="code-block-2-2"></a>  <span class="at">-r</span> 2.0.1 <span class="dt">\</span></span>
-<span id="cb2-3"><a href="#cb2-3" tabindex="-1" aria-label="code-block-2-3"></a>  <span class="at">-profile</span> singularity <span class="dt">\</span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1" aria-label="code-block-2-3"></a>  <span class="at">-profile</span> docker <span class="dt">\</span></span>
 <span id="cb2-4"><a href="#cb2-4" tabindex="-1" aria-label="code-block-2-4"></a>  <span class="at">--input</span> samplesheet.csv <span class="dt">\</span></span>
 <span id="cb2-5"><a href="#cb2-5" tabindex="-1" aria-label="code-block-2-5"></a>  <span class="at">--databases</span> databases_taxprofiler.csv <span class="dt">\</span></span>
-<span id="cb2-6"><a href="#cb2-6" tabindex="-1" aria-label="code-block-2-6"></a>  <span class="at">--outdir</span> ~/mbite/results/taxprofiler <span class="dt">\</span></span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1" aria-label="code-block-2-6"></a>  <span class="at">--outdir</span> /mnt/data/taxprofiler/results <span class="dt">\</span></span>
 <span id="cb2-7"><a href="#cb2-7" tabindex="-1" aria-label="code-block-2-7"></a>  <span class="at">--perform_shortread_qc</span> <span class="dt">\</span></span>
 <span id="cb2-8"><a href="#cb2-8" tabindex="-1" aria-label="code-block-2-8"></a>  <span class="at">--save_analysis_ready_fastqs</span> <span class="dt">\</span></span>
 <span id="cb2-9"><a href="#cb2-9" tabindex="-1" aria-label="code-block-2-9"></a>  <span class="at">--run_kraken2</span> <span class="at">--run_bracken</span> <span class="dt">\</span></span>
-<span id="cb2-10"><a href="#cb2-10" tabindex="-1" aria-label="code-block-2-10"></a>  <span class="at">--run_metaphlan</span> <span class="at">--run_motus</span> <span class="at">--run_sylph</span> <span class="dt">\</span></span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1" aria-label="code-block-2-10"></a>  <span class="at">--run_motus</span> <span class="dt">\</span></span>
 <span id="cb2-11"><a href="#cb2-11" tabindex="-1" aria-label="code-block-2-11"></a>  <span class="at">--run_profile_standardisation</span> <span class="dt">\</span></span>
-<span id="cb2-12"><a href="#cb2-12" tabindex="-1" aria-label="code-block-2-12"></a>  <span class="at">--taxpasta_add_name</span> <span class="at">--taxpasta_add_rank</span> <span class="at">--taxpasta_add_lineage</span> <span class="dt">\</span></span>
-<span id="cb2-13"><a href="#cb2-13" tabindex="-1" aria-label="code-block-2-13"></a>  <span class="at">--run_krona</span> <span class="dt">\</span></span>
-<span id="cb2-14"><a href="#cb2-14" tabindex="-1" aria-label="code-block-2-14"></a>  <span class="at">-resume</span></span></code></pre>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1" aria-label="code-block-2-12"></a>  <span class="at">--run_krona</span> <span class="dt">\</span></span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1" aria-label="code-block-2-13"></a>  <span class="at">-resume</span></span></code></pre>
 </div>
 </section><section><h2 class="section-heading" id="output-overview">Output overview<a class="anchor" aria-label="anchor" href="#output-overview"></a>
 </h2>
@@ -776,13 +813,13 @@ analysis</li>
 <div class="codewrapper sourceCode" id="cb3">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1" aria-label="code-block-3-1"></a><span class="fu">ls</span> ~/mbite/results/taxprofiler</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1" aria-label="code-block-3-1"></a><span class="fu">ls</span> /mnt/data/taxprofiler/results</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>analysis_ready_fastqs  bracken  fastp  kraken2  krona  metaphlan  motus
-multiqc  pipeline_info  sylph  taxpasta  ...</code></pre>
+<pre class="output" tabindex="0"><code>analysis_ready_fastqs  bracken  fastp  kraken2  krona  motus
+multiqc  pipeline_info  </code></pre>
 </div>
 <div class="section level3">
 <h3 id="multiqc-report">MultiQC report<a class="anchor" aria-label="anchor" href="#multiqc-report"></a>
@@ -798,6 +835,35 @@ and classification summaries. Copy it to your laptop to open it:</p>
 <div class="section level3">
 <h3 id="taxonomic-classification-summaries">Taxonomic classification summaries<a class="anchor" aria-label="anchor" href="#taxonomic-classification-summaries"></a>
 </h3>
+<p>The pipeline writes one folder per profiler into
+<code>results/</code>:</p>
+<pre class="text"><code>results/
+├── kraken2
+│   ├── k2_standard_08_GB_20260626
+│   │   ├── Gut_sample1_Gut_sample1_run1_k2_standard_08_GB_20260626.kraken2.kraken2.report.txt
+│   │   ├── ...                                   (one report per sample)
+│   │   └── Gut_sample5_Gut_sample5_run1_k2_standard_08_GB_20260626.kraken2.kraken2.report.txt
+│   ├── k2_standard_08_GB_20260626_bracken
+│   ├── kraken2_k2_standard_08_GB_20260626_bracken-bracken_combined_reports.txt
+│   └── kraken2_k2_standard_08_GB_20260626_combined_reports.txt
+├── bracken
+│   ├── bracken_k2_standard_08_GB_20260626_bracken_combined_reports.txt
+│   └── k2_standard_08_GB_20260626_bracken
+│       ├── Gut_sample1_..._bracken.bracken.kraken2.report_bracken.txt
+│       ├── Gut_sample1_..._bracken.bracken.tsv
+│       └── ...                                   (two files per sample)
+├── motus
+│   ├── db_mOTU_v3.1.0
+│   │   ├── Gut_sample1_Gut_sample1_run1_db_mOTU_v3.1.0.log
+│   │   ├── Gut_sample1_Gut_sample1_run1_db_mOTU_v3.1.0.out
+│   │   └── ...                                   (.log + .out per sample)
+│   └── motus_db_mOTU_v3.1.0_combined_reports.txt
+└── taxpasta
+    ├── bracken_k2_standard_08_GB_20260626_bracken.tsv
+    ├── kraken2_k2_standard_08_GB_20260626_bracken-bracken.tsv
+    ├── kraken2_k2_standard_08_GB_20260626.tsv
+    ├── metaphlan_mpa_vJun23_CHOCOPhlAnSGB_202403.tsv
+    └── motus_db_mOTU_v3.1.0.tsv</code></pre>
 </div>
 <div class="section level3">
 <h3 id="standardised-and-merged-tables-taxpasta">Standardised and merged tables (Taxpasta)<a class="anchor" aria-label="anchor" href="#standardised-and-merged-tables-taxpasta"></a>
@@ -805,11 +871,10 @@ and classification summaries. Copy it to your laptop to open it:</p>
 <p>Taxpasta converts the output of each profiler into one merged table
 per profiler and database, with taxa in rows and samples in columns. The
 tables are in <code>taxpasta/</code>.</p>
-<div class="codewrapper sourceCode" id="cb6">
+<div class="codewrapper sourceCode" id="cb7">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" tabindex="-1" aria-label="code-block-6-1"></a><span class="fu">ls</span> ~/mbite/results/taxprofiler/taxpasta/</span>
-<span id="cb6-2"><a href="#cb6-2" tabindex="-1" aria-label="code-block-6-2"></a><span class="fu">head</span> <span class="at">-n</span> 5 ~/mbite/results/taxprofiler/taxpasta/bracken_k2_standard_08gb.tsv</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" tabindex="-1" aria-label="code-block-7-1"></a><span class="fu">ls</span> /mnt/data/taxprofilertaxprofiler/results/taxpasta/</span></code></pre>
 </div>
 <p>We import these tables into R in the episode Importing and exploring
 microbiome data with R.</p>
@@ -844,7 +909,7 @@ any links that you are not going to use.
 </div>
 </section></section><section id="aio-04-funcprofiler"><p>Content from <a href="04-funcprofiler.html">Functional profiling with nf-core/funcprofiler</a></p>
 <hr>
-<p>Last updated on 2026-10-27 |
+<p>Last updated on 2026-11-03 |
 
         <a href="https://github.com/cladigar/metagen-taxon-function/edit/main/episodes/04-funcprofiler.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -894,76 +959,111 @@ analysis</li>
 <hr class="half-width">
 <p>nf-core/funcprofiler does not perform read QC or host removal. We use
 the reads saved by taxprofiler with
-<code>--save_analysis_ready_fastqs</code>.</p>
+<code>--save_analysis_ready_fastqs</code>. We work in the same folder as
+in the previous episodes, where the database sheets and the Nectar
+config file are:</p>
 <div class="codewrapper sourceCode" id="cb1">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1" aria-label="code-block-1-1"></a><span class="bu">cd</span> ~/mbite/run</span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1" aria-label="code-block-1-2"></a><span class="fu">ls</span> ~/mbite/results/taxprofiler/analysis_ready_fastqs/</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1" aria-label="code-block-1-1"></a><span class="bu">cd</span> /mnt/data/taxprofiler</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1" aria-label="code-block-1-2"></a><span class="fu">ls</span> /mnt/data/taxprofiler/results/analysis_ready_fastqs/</span></code></pre>
 </div>
+<p>fastp names the cleaned reads
+<code>&lt;sample&gt;_&lt;run_accession&gt;_1.fastp.fastq.gz</code> and
+<code>&lt;sample&gt;_&lt;run_accession&gt;_2.fastp.fastq.gz</code>:</p>
 <div class="codewrapper sourceCode" id="cb2">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1" aria-label="code-block-2-1"></a><span class="va">READS</span><span class="op">=</span>~/mbite/results/taxprofiler/analysis_ready_fastqs</span>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1" aria-label="code-block-2-1"></a><span class="va">READS</span><span class="op">=</span>/mnt/data/taxprofiler/results/analysis_ready_fastqs</span>
 <span id="cb2-2"><a href="#cb2-2" tabindex="-1" aria-label="code-block-2-2"></a><span class="bu">echo</span> <span class="st">"sample,run_accession,instrument_platform,fastq_1,fastq_2,fasta"</span> <span class="op">&gt;</span> samplesheet_func.csv</span>
 <span id="cb2-3"><a href="#cb2-3" tabindex="-1" aria-label="code-block-2-3"></a><span class="cf">for</span> i <span class="kw">in</span> 1 2 3 4 5<span class="kw">;</span> <span class="cf">do</span></span>
-<span id="cb2-4"><a href="#cb2-4" tabindex="-1" aria-label="code-block-2-4"></a>  <span class="va">r1</span><span class="op">=</span><span class="va">$(</span><span class="fu">ls</span> <span class="va">$READS</span>/gut<span class="va">${i}</span>_<span class="pp">*</span>_1.fastq.gz<span class="va">)</span></span>
-<span id="cb2-5"><a href="#cb2-5" tabindex="-1" aria-label="code-block-2-5"></a>  <span class="va">r2</span><span class="op">=</span><span class="va">$(</span><span class="fu">ls</span> <span class="va">$READS</span>/gut<span class="va">${i}</span>_<span class="pp">*</span>_2.fastq.gz<span class="va">)</span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1" aria-label="code-block-2-4"></a>  <span class="va">r1</span><span class="op">=</span><span class="va">$READS</span>/gut<span class="va">${i}</span>_run1_1.fastp.fastq.gz</span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1" aria-label="code-block-2-5"></a>  <span class="va">r2</span><span class="op">=</span><span class="va">$READS</span>/gut<span class="va">${i}</span>_run1_2.fastp.fastq.gz</span>
 <span id="cb2-6"><a href="#cb2-6" tabindex="-1" aria-label="code-block-2-6"></a>  <span class="bu">echo</span> <span class="st">"gut</span><span class="va">${i}</span><span class="st">,run1,ILLUMINA,</span><span class="va">${r1}</span><span class="st">,</span><span class="va">${r2}</span><span class="st">,"</span> <span class="op">&gt;&gt;</span> samplesheet_func.csv</span>
 <span id="cb2-7"><a href="#cb2-7" tabindex="-1" aria-label="code-block-2-7"></a><span class="cf">done</span></span>
 <span id="cb2-8"><a href="#cb2-8" tabindex="-1" aria-label="code-block-2-8"></a><span class="fu">cat</span> samplesheet_func.csv</span></code></pre>
 </div>
-</section><section><h2 class="section-heading" id="running-the-pipeline">Running the pipeline<a class="anchor" aria-label="anchor" href="#running-the-pipeline"></a>
-</h2>
-<hr class="half-width">
+<p>Check that every file listed exists:</p>
 <div class="codewrapper sourceCode" id="cb3">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1" aria-label="code-block-3-1"></a><span class="ex">nextflow</span> run nf-core/funcprofiler <span class="dt">\</span></span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1" aria-label="code-block-3-2"></a>  <span class="at">-r</span> <span class="op">&lt;</span>version<span class="op">&gt;</span> <span class="dt">\</span></span>
-<span id="cb3-3"><a href="#cb3-3" tabindex="-1" aria-label="code-block-3-3"></a>  <span class="at">-profile</span> singularity <span class="dt">\</span></span>
-<span id="cb3-4"><a href="#cb3-4" tabindex="-1" aria-label="code-block-3-4"></a>  <span class="at">--input</span> samplesheet_func.csv <span class="dt">\</span></span>
-<span id="cb3-5"><a href="#cb3-5" tabindex="-1" aria-label="code-block-3-5"></a>  <span class="at">--databases</span> databases_funcprofiler.csv <span class="dt">\</span></span>
-<span id="cb3-6"><a href="#cb3-6" tabindex="-1" aria-label="code-block-3-6"></a>  <span class="at">--outdir</span> ~/mbite/results/funcprofiler <span class="dt">\</span></span>
-<span id="cb3-7"><a href="#cb3-7" tabindex="-1" aria-label="code-block-3-7"></a>  <span class="at">--run_humann_v3</span> <span class="dt">\</span></span>
-<span id="cb3-8"><a href="#cb3-8" tabindex="-1" aria-label="code-block-3-8"></a>  <span class="at">--run_eggnogmapper</span> <span class="dt">\</span></span>
-<span id="cb3-9"><a href="#cb3-9" tabindex="-1" aria-label="code-block-3-9"></a>  <span class="at">-resume</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1" aria-label="code-block-3-1"></a><span class="fu">tail</span> <span class="at">-n</span> +2 samplesheet_func.csv <span class="kw">|</span> <span class="fu">cut</span> <span class="at">-d,</span> <span class="at">-f4,5</span> <span class="kw">|</span> <span class="fu">tr</span> <span class="st">','</span> <span class="st">'\n'</span> <span class="kw">|</span> <span class="fu">xargs</span> ls <span class="at">-l</span></span></code></pre>
+</div>
+</section><section><h2 class="section-heading" id="running-the-pipeline">Running the pipeline<a class="anchor" aria-label="anchor" href="#running-the-pipeline"></a>
+</h2>
+<hr class="half-width">
+<p>During the workshop we run DIAMOND, the only database in
+<code>databases_funcprofiler.csv</code>. HUMAnN 4 and eggNOG-mapper need
+much larger databases and several hours, so their outputs have been
+precomputed for you.</p>
+<div class="codewrapper sourceCode" id="cb4">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1" aria-label="code-block-4-1"></a><span class="ex">nextflow</span> run nf-core/funcprofiler <span class="dt">\</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1" aria-label="code-block-4-2"></a>  <span class="at">-r</span> 1.0.0 <span class="dt">\</span></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1" aria-label="code-block-4-3"></a>  <span class="at">-profile</span> docker <span class="dt">\</span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1" aria-label="code-block-4-4"></a>  <span class="at">-c</span> configs/nectar.config <span class="dt">\</span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1" aria-label="code-block-4-5"></a>  <span class="at">--input</span> samplesheet_func.csv <span class="dt">\</span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1" aria-label="code-block-4-6"></a>  <span class="at">--databases</span> databases_funcprofiler.csv <span class="dt">\</span></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1" aria-label="code-block-4-7"></a>  <span class="at">--outdir</span> /mnt/data/funcprofiler/results <span class="dt">\</span></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1" aria-label="code-block-4-8"></a>  <span class="at">--run_diamond</span> <span class="dt">\</span></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1" aria-label="code-block-4-9"></a>  <span class="at">-resume</span></span></code></pre>
 </div>
 </section><section><h2 class="section-heading" id="outputs">Outputs<a class="anchor" aria-label="anchor" href="#outputs"></a>
 </h2>
 <hr class="half-width">
-<div class="codewrapper sourceCode" id="cb4">
+<div class="codewrapper sourceCode" id="cb5">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1" aria-label="code-block-4-1"></a><span class="fu">ls</span> ~/mbite/results/funcprofiler</span>
-<span id="cb4-2"><a href="#cb4-2" tabindex="-1" aria-label="code-block-4-2"></a><span class="fu">ls</span> ~/mbite/results/funcprofiler/humann_v3/gut1</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1" aria-label="code-block-5-1"></a><span class="fu">ls</span> /mnt/data/funcprofiler/results</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1" aria-label="code-block-5-2"></a><span class="fu">ls</span> /mnt/data/funcprofiler/results/diamond/gut_workshop_v1</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1" aria-label="code-block-5-3"></a><span class="fu">ls</span> /mnt/data/funcprofiler/results/humann4</span></code></pre>
 </div>
 <!-- TODO: paste real output -->
+<p>All outputs are in <code>/mnt/data/funcprofiler/results/</code>:</p>
 <ul>
 <li>MultiQC report: <code>multiqc/multiqc_report.html</code>
 </li>
+<li>DIAMOND alignments (run during the workshop):
+<code>diamond/gut_workshop_v1/</code>
+</li>
+<li>HUMAnN 4 outputs (precomputed), one set of files per sample in
+<code>humann4/</code>:
+<ul>
 <li>Gene family abundance:
-<code>humann_v3/&lt;sample&gt;/*_genefamilies.tsv</code>
+<code>&lt;sample&gt;_2_genefamilies.tsv.gz</code>
+</li>
+<li>Reaction abundance:
+<code>&lt;sample&gt;_3_reactions.tsv.gz</code>
 </li>
 <li>Pathway abundance:
-<code>humann_v3/&lt;sample&gt;/*_pathabundance.tsv</code>
+<code>&lt;sample&gt;_4_pathabundance.tsv.gz</code>
 </li>
-<li>Pathway coverage:
-<code>humann_v3/&lt;sample&gt;/*_pathcoverage.tsv</code>
+<li>Gene families regrouped to other functional categories:
+<code>&lt;sample&gt;_regroup.tsv.gz</code>
 </li>
-<li>Species functional profiles: stratified rows in the HUMAnN
-tables</li>
-<li>eggNOG-mapper annotations:
-<code>eggnogmapper/&lt;db_name&gt;/*.emapper.annotations</code>
+<li>Species functional profiles: stratified rows
+(<code>PATHWAY|g__Genus.s__species</code>) in the HUMAnN tables</li>
+</ul>
+</li>
+<li>eggNOG-mapper annotations (precomputed):
+<code>eggnogmapper/*.emapper.annotations</code>
 </li>
 <li>Execution and resource reports: <code>pipeline_info/</code>
 </li>
 </ul>
-<div class="codewrapper sourceCode" id="cb5">
+<p>HUMAnN 4 does not write a separate pathway coverage table as HUMAnN 3
+did.</p>
+<div class="codewrapper sourceCode" id="cb6">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1" aria-label="code-block-5-1"></a><span class="fu">head</span> <span class="at">-n</span> 5 ~/mbite/results/funcprofiler/humann_v3/gut1/<span class="pp">*</span>_pathabundance.tsv</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" tabindex="-1" aria-label="code-block-6-1"></a><span class="fu">zcat</span> /mnt/data/funcprofiler/results/humann4/Gut_sample1_4_pathabundance.tsv.gz <span class="kw">|</span> <span class="fu">head</span> <span class="at">-n</span> 5</span></code></pre>
 </div>
+<p>The precomputed outputs use the sample names <code>Gut_sample1</code>
+to <code>Gut_sample5</code> instead of <code>gut1</code> to
+<code>gut5</code>. A copy of the HUMAnN 4 outputs is also in
+<code>/mnt/data/workshop_data/funcprofiler/humann4/</code>, which is the
+folder we use in R.</p>
 <div id="keypoints1" class="callout keypoints">
 <div class="callout-square">
 <i class="callout-icon" data-feather="key"></i>
@@ -986,9 +1086,10 @@ any links that you are not going to use.
  -->
 </section></section><section id="aio-05-r-microbiome-data"><p>Content from <a href="05-r-microbiome-data.html">Importing and exploring microbiome data with R</a></p>
 <hr>
-<p>Last updated on 2026-10-27 |
+<p>Last updated on 2026-11-03 |
 
         <a href="https://github.com/cladigar/metagen-taxon-function/edit/main/episodes/05-r-microbiome-data.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
+<p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 30 minutes</p>
 <div class="text-end">
           <button role="button" aria-pressed="false" tabindex="0" id="expand-code" class="pull-right" data-expand="Expand All Solutions " data-collapse="Collapse All Solutions "> Expand All Solutions <i aria-hidden="true" data-feather="plus"></i></button>
         </div>
@@ -1001,9 +1102,9 @@ any links that you are not going to use.
 <h3 class="card-title">Questions</h3>
 <ul>
 <li>Which R data structures are used for microbiome data?</li>
-<li>How do I import Taxpasta and HUMAnN tables and sample metadata into
-R?</li>
-<li>How do I filter, aggregate and transform microbiome data?</li>
+<li>How do I import a taxonomic profile, a functional profile and sample
+metadata into R?</li>
+<li>How do I aggregate, filter and transform microbiome data?</li>
 </ul>
 </div>
 </div>
@@ -1015,12 +1116,44 @@ R?</li>
 <ul>
 <li>Identify the phyloseq and TreeSummarizedExperiment object types and
 explain their principal differences</li>
-<li>Import taxonomic and functional tables and sample metadata</li>
-<li>Build a TreeSummarizedExperiment object</li>
-<li>Filter low-prevalence features, aggregate taxa at a selected rank
+<li>Import a MetaPhlAn taxonomic profile, HUMAnN pathway abundances and
+the sample metadata</li>
+<li>Build a TreeSummarizedExperiment object and explore its
+components</li>
+<li>Aggregate taxa at a selected rank, filter low-prevalence features
 and calculate relative abundance</li>
+<li>Visualise taxonomic composition, prevalence and the most abundant
+taxa and pathways</li>
 </ul>
 </div>
+</div>
+</div>
+</div>
+</div>
+<p>In the previous episodes nf-core/taxprofiler and nf-core/funcprofiler
+produced several tables. Here we bring one taxonomic profile (MetaPhlAn)
+and one functional profile (HUMAnN pathway abundance) into R. We use
+them to build data objects that Bioconductor packages can work with, and
+to take a first look at the samples.</p>
+<div id="where-do-we-run-r" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div id="where-do-we-run-r" class="callout-inner">
+<h3 class="callout-title">Where do we run R?</h3>
+<div class="callout-content">
+<p>We use the workshop RStudio Server, a separate Nectar instance from
+the one where we ran the pipelines. Copies of the pipeline outputs are
+already in <code>/data/workshop_data/</code> on the RStudio Server, so
+we read them directly and do not need to copy anything.</p>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>/data/workshop_data
+├── funcprofiler/humann4/        # HUMAnN 4 outputs, one set of files per sample
+├── metadata/                    # samplesheets used to run the pipelines
+└── taxprofiler/                 # Taxpasta tables and merged profiler reports</code></pre>
 </div>
 </div>
 </div>
@@ -1028,8 +1161,7 @@ and calculate relative abundance</li>
 <section><h2 class="section-heading" id="loading-the-libraries">Loading the libraries<a class="anchor" aria-label="anchor" href="#loading-the-libraries"></a>
 </h2>
 <hr class="half-width">
-<p>Install the packages first (see Setup), then load them:</p>
-<div class="codewrapper sourceCode" id="cb1">
+<div class="codewrapper sourceCode" id="cb2">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -1042,8 +1174,10 @@ and calculate relative abundance</li>
 <span><span class="kw">library</span><span class="op">(</span><span class="va">mia</span><span class="op">)</span></span>
 <span><span class="kw">library</span><span class="op">(</span><span class="va">miaViz</span><span class="op">)</span></span></code></pre>
 </div>
-<p>Check the versions you are using:</p>
-<div class="codewrapper sourceCode" id="cb2">
+<p>Record the package versions. Function names in mia and miaViz have
+changed between releases, so this helps when you compare your code with
+other tutorials:</p>
+<div class="codewrapper sourceCode" id="cb3">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -1054,7 +1188,7 @@ and calculate relative abundance</li>
 </h3>
 <pre class="output" tabindex="0"><code>[1] '1.20.0'</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb4">
+<div class="codewrapper sourceCode" id="cb5">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -1065,143 +1199,521 @@ and calculate relative abundance</li>
 </h3>
 <pre class="output" tabindex="0"><code>[1] '1.20.0'</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb6">
+<p>Then define where the data are:</p>
+<div class="codewrapper sourceCode" id="cb7">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">packageVersion</span><span class="op">(</span><span class="st">"TreeSummarizedExperiment"</span><span class="op">)</span></span></code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="output" tabindex="0"><code>[1] '2.20.0'</code></pre>
+<code class="sourceCode R"><span><span class="va">data_dir</span>  <span class="op">&lt;-</span> <span class="st">"/data/workshop_data"</span></span>
+<span><span class="va">mpa_file</span>  <span class="op">&lt;-</span> <span class="fu">file.path</span><span class="op">(</span><span class="va">data_dir</span>, <span class="st">"taxprofiler"</span>,</span>
+<span>                       <span class="st">"metaphlan_mpa_vJun23_CHOCOPhlAnSGB_202403_combined_reports.txt"</span><span class="op">)</span></span>
+<span><span class="va">meta_file</span> <span class="op">&lt;-</span> <span class="fu">file.path</span><span class="op">(</span><span class="va">data_dir</span>, <span class="st">"metadata"</span>, <span class="st">"taxprofiler_samplesheet.csv"</span><span class="op">)</span></span>
+<span><span class="va">humann_dir</span> <span class="op">&lt;-</span> <span class="fu">file.path</span><span class="op">(</span><span class="va">data_dir</span>, <span class="st">"funcprofiler"</span>, <span class="st">"humann4"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># TRUE on the workshop RStudio Server, where all the input files are present.</span></span>
+<span><span class="co"># The lesson website is built without these files, so there the chunks that</span></span>
+<span><span class="co"># read the data are shown but not run.</span></span>
+<span><span class="va">has_data</span> <span class="op">&lt;-</span> <span class="fu">file.exists</span><span class="op">(</span><span class="va">mpa_file</span><span class="op">)</span> <span class="op">&amp;&amp;</span></span>
+<span>            <span class="fu">file.exists</span><span class="op">(</span><span class="va">meta_file</span><span class="op">)</span> <span class="op">&amp;&amp;</span></span>
+<span>            <span class="fu">length</span><span class="op">(</span><span class="fu">list.files</span><span class="op">(</span><span class="va">humann_dir</span>,</span>
+<span>                              pattern <span class="op">=</span> <span class="st">"_4_pathabundance\\.tsv\\.gz$"</span><span class="op">)</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span></span></code></pre>
 </div>
 </section><section><h2 class="section-heading" id="phyloseq-and-treesummarizedexperiment">phyloseq and TreeSummarizedExperiment<a class="anchor" aria-label="anchor" href="#phyloseq-and-treesummarizedexperiment"></a>
 </h2>
 <hr class="half-width">
+<p>A microbiome dataset has three parts that must stay in sync: an
+abundance table (features × samples), information about the features
+(taxonomy, pathway names) and information about the samples (metadata).
+Two R object types keep these together:</p>
+<table class="table">
+<colgroup>
+<col width="33%">
+<col width="21%">
+<col width="45%">
+</colgroup>
+<thead><tr>
+<th>Component</th>
+<th>phyloseq</th>
+<th>TreeSummarizedExperiment (TSE)</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>Abundance table</td>
+<td><code>otu_table()</code></td>
+<td>
+<code>assay()</code>, which can hold several (counts, relative
+abundance, …)</td>
+</tr>
+<tr>
+<td>Feature information</td>
+<td><code>tax_table()</code></td>
+<td><code>rowData()</code></td>
+</tr>
+<tr>
+<td>Sample information</td>
+<td><code>sample_data()</code></td>
+<td><code>colData()</code></td>
+</tr>
+<tr>
+<td>Phylogenetic tree</td>
+<td><code>phy_tree()</code></td>
+<td><code>rowTree()</code></td>
+</tr>
+<tr>
+<td>Other data types</td>
+<td>–</td>
+<td>
+<code>altExp()</code>, e.g. the same samples aggregated at another
+rank</td>
+</tr>
+</tbody>
+</table>
 <ul>
-<li>phyloseq: <code>otu_table</code>, <code>tax_table</code>,
-<code>sample_data</code>, <code>phy_tree</code>
-</li>
-<li>TreeSummarizedExperiment: <code>assay</code> (one or more),
-<code>rowData</code>, <code>colData</code>, <code>rowTree</code>
-</li>
-<li>Convert between them with <code>mia::convertToPhyloseq()</code> and
-<code>mia::convertFromPhyloseq()</code>
-</li>
-</ul></section><section><h2 class="section-heading" id="importing-the-data">Importing the data<a class="anchor" aria-label="anchor" href="#importing-the-data"></a>
+<li>
+<strong>phyloseq</strong> is the original microbiome package. Many
+older tutorials and packages use it.</li>
+<li>
+<strong>TreeSummarizedExperiment</strong> builds on Bioconductor’s
+<code>SummarizedExperiment</code>, the same structure used for RNA-seq
+and other omics data. It can store several assays and alternative
+experiments in one object. The <em>mia</em> and <em>miaViz</em> packages
+and the <a href="https://microbiome.github.io/OMA/" class="external-link">Orchestrating
+Microbiome Analysis (OMA)</a> book are built around it.</li>
+</ul>
+<p>We use TSE in this workshop. If you need phyloseq for another
+package, you can convert in both directions (this needs the phyloseq
+package installed):</p>
+<div class="codewrapper sourceCode" id="cb8">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ps</span>  <span class="op">&lt;-</span> <span class="fu">convertToPhyloseq</span><span class="op">(</span><span class="va">tse</span><span class="op">)</span></span>
+<span><span class="va">tse</span> <span class="op">&lt;-</span> <span class="fu">convertFromPhyloseq</span><span class="op">(</span><span class="va">ps</span><span class="op">)</span></span></code></pre>
+</div>
+</section><section><h2 class="section-heading" id="importing-the-taxonomic-profile">Importing the taxonomic profile<a class="anchor" aria-label="anchor" href="#importing-the-taxonomic-profile"></a>
 </h2>
 <hr class="half-width">
-<p>Copy the results from Nectar to your laptop (run on your laptop):</p>
-<div class="codewrapper sourceCode" id="cb8">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" tabindex="-1" aria-label="code-block-8-1"></a><span class="co"># PENDING TO WRITE CODE</span></span></code></pre>
-</div>
-<div class="section level3">
-<h3 id="sample-metadata">Sample metadata<a class="anchor" aria-label="anchor" href="#sample-metadata"></a>
-</h3>
+<p>nf-core/taxprofiler ran four profilers. Here we use
+<strong>MetaPhlAn</strong>, because its merged report already contains
+the full lineage of each taxon
+(<code>k__Bacteria|p__…|g__…|s__…</code>). mia reads this format
+directly with <code>importMetaPhlAn()</code>:</p>
 <div class="codewrapper sourceCode" id="cb9">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">meta</span> <span class="op">&lt;-</span> <span class="fu">read_tsv</span><span class="op">(</span><span class="va">meta_file</span>, show_col_types <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="va">meta</span></span></code></pre>
+<code class="sourceCode R"><span><span class="va">tse</span> <span class="op">&lt;-</span> <span class="fu">importMetaPhlAn</span><span class="op">(</span><span class="va">mpa_file</span><span class="op">)</span></span>
+<span><span class="va">tse</span></span></code></pre>
 </div>
-</div>
+<p>The object has one row per MetaPhlAn species-level genome bin (SGB,
+<code>t__…</code>) and one column per sample.
+<code>importMetaPhlAn()</code> also stored the profile aggregated at
+every taxonomic rank as alternative experiments
+(<code>altExpNames</code>).</p>
 <div class="section level3">
-<h3 id="taxonomic-table-taxpasta">Taxonomic table (Taxpasta)<a class="anchor" aria-label="anchor" href="#taxonomic-table-taxpasta"></a>
+<h3 id="tidying-sample-and-taxon-names">Tidying sample and taxon names<a class="anchor" aria-label="anchor" href="#tidying-sample-and-taxon-names"></a>
 </h3>
+<p>The column names include the run and database names, and the samples
+are not in order. We keep only the sample ID and sort the samples:</p>
 <div class="codewrapper sourceCode" id="cb10">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">tax_tbl</span> <span class="op">&lt;-</span> <span class="fu">read_tsv</span><span class="op">(</span><span class="va">tax_file</span>, show_col_types <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="fu">head</span><span class="op">(</span><span class="va">tax_tbl</span><span class="op">)</span></span></code></pre>
+<code class="sourceCode R"><span><span class="fu">colnames</span><span class="op">(</span><span class="va">tse</span><span class="op">)</span></span>
+<span><span class="fu">colnames</span><span class="op">(</span><span class="va">tse</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu">sub</span><span class="op">(</span><span class="st">"^(Gut_sample[0-9]+)_.*$"</span>, <span class="st">"\\1"</span>, <span class="fu">colnames</span><span class="op">(</span><span class="va">tse</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">tse</span> <span class="op">&lt;-</span> <span class="va">tse</span><span class="op">[</span>, <span class="fu">sort</span><span class="op">(</span><span class="fu">colnames</span><span class="op">(</span><span class="va">tse</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="fu">colnames</span><span class="op">(</span><span class="va">tse</span><span class="op">)</span></span></code></pre>
 </div>
-</div>
-</section><section><h2 class="section-heading" id="building-a-treesummarizedexperiment">Building a TreeSummarizedExperiment<a class="anchor" aria-label="anchor" href="#building-a-treesummarizedexperiment"></a>
-</h2>
-<hr class="half-width">
+<p>The taxon names have MetaPhlAn rank prefixes (<code>g__</code>,
+<code>s__</code>). We remove them so the plot labels are easier to
+read:</p>
 <div class="codewrapper sourceCode" id="cb11">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">annot_cols</span> <span class="op">&lt;-</span> <span class="fu">c</span><span class="op">(</span><span class="st">"taxonomy_id"</span>, <span class="st">"name"</span>, <span class="st">"rank"</span>, <span class="st">"lineage"</span><span class="op">)</span></span>
-<span><span class="va">sample_cols</span> <span class="op">&lt;-</span> <span class="fu">setdiff</span><span class="op">(</span><span class="fu">colnames</span><span class="op">(</span><span class="va">tax_tbl</span><span class="op">)</span>, <span class="va">annot_cols</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">counts</span> <span class="op">&lt;-</span> <span class="fu">as.matrix</span><span class="op">(</span><span class="va">tax_tbl</span><span class="op">[</span>, <span class="va">sample_cols</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="fu">rownames</span><span class="op">(</span><span class="va">counts</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">tax_tbl</span><span class="op">$</span><span class="va">taxonomy_id</span></span>
-<span></span>
-<span><span class="va">row_df</span> <span class="op">&lt;-</span> <span class="va">tax_tbl</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">select</span><span class="op">(</span><span class="fu">any_of</span><span class="op">(</span><span class="va">annot_cols</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">separate_wider_delim</span><span class="op">(</span><span class="va">lineage</span>, delim <span class="op">=</span> <span class="st">";"</span>,</span>
-<span>                       names <span class="op">=</span> <span class="fu">c</span><span class="op">(</span><span class="st">"Kingdom"</span>, <span class="st">"Phylum"</span>, <span class="st">"Class"</span>, <span class="st">"Order"</span>,</span>
-<span>                                 <span class="st">"Family"</span>, <span class="st">"Genus"</span>, <span class="st">"Species"</span><span class="op">)</span>,</span>
-<span>                       too_few <span class="op">=</span> <span class="st">"align_start"</span>, too_many <span class="op">=</span> <span class="st">"drop"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">as.data.frame</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="fu">rownames</span><span class="op">(</span><span class="va">row_df</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">tax_tbl</span><span class="op">$</span><span class="va">taxonomy_id</span></span>
-<span></span>
-<span><span class="va">col_df</span> <span class="op">&lt;-</span> <span class="va">meta</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">filter</span><span class="op">(</span><span class="va">sample</span> <span class="op">%in%</span> <span class="va">sample_cols</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">as.data.frame</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="fu">rownames</span><span class="op">(</span><span class="va">col_df</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">col_df</span><span class="op">$</span><span class="va">sample</span></span>
-<span><span class="va">col_df</span> <span class="op">&lt;-</span> <span class="va">col_df</span><span class="op">[</span><span class="va">sample_cols</span>, <span class="op">]</span></span>
-<span></span>
-<span><span class="va">tse</span> <span class="op">&lt;-</span> <span class="fu">TreeSummarizedExperiment</span><span class="op">(</span></span>
-<span>  assays  <span class="op">=</span> <span class="fu">list</span><span class="op">(</span>counts <span class="op">=</span> <span class="va">counts</span><span class="op">)</span>,</span>
-<span>  rowData <span class="op">=</span> <span class="va">row_df</span>,</span>
-<span>  colData <span class="op">=</span> <span class="va">col_df</span></span>
-<span><span class="op">)</span></span>
-<span><span class="va">tse</span></span></code></pre>
+<code class="sourceCode R"><span><span class="kw">for</span> <span class="op">(</span><span class="va">r</span> <span class="kw">in</span> <span class="fu">taxonomyRanks</span><span class="op">(</span><span class="va">tse</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu">rowData</span><span class="op">(</span><span class="va">tse</span><span class="op">)</span><span class="op">[[</span><span class="va">r</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu">sub</span><span class="op">(</span><span class="st">"^[a-z]__"</span>, <span class="st">""</span>, <span class="fu">rowData</span><span class="op">(</span><span class="va">tse</span><span class="op">)</span><span class="op">[[</span><span class="va">r</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="fu">rowData</span><span class="op">(</span><span class="va">tse</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="fu">c</span><span class="op">(</span><span class="st">"phylum"</span>, <span class="st">"genus"</span>, <span class="st">"species"</span><span class="op">)</span><span class="op">]</span></span></code></pre>
 </div>
-</section><section><h2 class="section-heading" id="sequencing-depth">Sequencing depth<a class="anchor" aria-label="anchor" href="#sequencing-depth"></a>
-</h2>
-<hr class="half-width">
+</div>
+<div class="section level3">
+<h3 id="exploring-the-object">Exploring the object<a class="anchor" aria-label="anchor" href="#exploring-the-object"></a>
+</h3>
+<p>Let’s look at the three main components:</p>
 <div class="codewrapper sourceCode" id="cb12">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">depth</span> <span class="op">&lt;-</span> <span class="fu">data.frame</span><span class="op">(</span>sample <span class="op">=</span> <span class="fu">colnames</span><span class="op">(</span><span class="va">tse</span><span class="op">)</span>,</span>
-<span>                    reads  <span class="op">=</span> <span class="fu">colSums</span><span class="op">(</span><span class="fu">assay</span><span class="op">(</span><span class="va">tse</span>, <span class="st">"counts"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu">ggplot</span><span class="op">(</span><span class="va">depth</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">sample</span>, y <span class="op">=</span> <span class="va">reads</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">geom_col</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Sample"</span>, y <span class="op">=</span> <span class="st">"Classified reads"</span><span class="op">)</span></span></code></pre>
+<code class="sourceCode R"><span><span class="fu">assayNames</span><span class="op">(</span><span class="va">tse</span><span class="op">)</span></span>
+<span><span class="fu">assay</span><span class="op">(</span><span class="va">tse</span>, <span class="st">"metaphlan"</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="op">]</span></span>
+<span><span class="fu">rowData</span><span class="op">(</span><span class="va">tse</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="fu">c</span><span class="op">(</span><span class="st">"phylum"</span>, <span class="st">"genus"</span>, <span class="st">"species"</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="fu">taxonomyRanks</span><span class="op">(</span><span class="va">tse</span><span class="op">)</span></span></code></pre>
 </div>
-</section><section><h2 class="section-heading" id="filtering-aggregating-and-transforming">Filtering, aggregating and transforming<a class="anchor" aria-label="anchor" href="#filtering-aggregating-and-transforming"></a>
-</h2>
-<hr class="half-width">
+<p>MetaPhlAn reports <strong>relative abundance in percent</strong>, not
+read counts, so each sample sums to about 100:</p>
 <div class="codewrapper sourceCode" id="cb13">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">tse_species</span> <span class="op">&lt;-</span> <span class="fu">agglomerateByRank</span><span class="op">(</span><span class="va">tse</span>, rank <span class="op">=</span> <span class="st">"Species"</span><span class="op">)</span></span>
-<span><span class="va">tse_species</span> <span class="op">&lt;-</span> <span class="fu">subsetByPrevalent</span><span class="op">(</span><span class="va">tse_species</span>,</span>
-<span>                                 assay.type <span class="op">=</span> <span class="st">"counts"</span>,</span>
-<span>                                 detection <span class="op">=</span> <span class="fl">10</span>,</span>
-<span>                                 prevalence <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span></span>
-<span><span class="va">tse_species</span> <span class="op">&lt;-</span> <span class="fu">transformAssay</span><span class="op">(</span><span class="va">tse_species</span>,</span>
-<span>                              assay.type <span class="op">=</span> <span class="st">"counts"</span>,</span>
-<span>                              method <span class="op">=</span> <span class="st">"relabundance"</span><span class="op">)</span></span>
-<span><span class="va">tse_species</span></span></code></pre>
+<code class="sourceCode R"><span><span class="fu">colSums</span><span class="op">(</span><span class="fu">assay</span><span class="op">(</span><span class="va">tse</span>, <span class="st">"metaphlan"</span><span class="op">)</span><span class="op">)</span></span></code></pre>
 </div>
-</section><section><h2 class="section-heading" id="visualising-composition">Visualising composition<a class="anchor" aria-label="anchor" href="#visualising-composition"></a>
-</h2>
-<hr class="half-width">
+<div id="what-about-sequencing-depth" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div id="what-about-sequencing-depth" class="callout-inner">
+<h3 class="callout-title">What about sequencing depth?</h3>
+<div class="callout-content">
+<p>Because MetaPhlAn reports percentages, we cannot see how many reads
+each sample had. Use the fastp section of the taxprofiler MultiQC report
+for read numbers. Profilers that report read counts (Kraken2/Bracken,
+for example) are compared on Day 2.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="section level3">
+<h3 id="adding-the-sample-metadata">Adding the sample metadata<a class="anchor" aria-label="anchor" href="#adding-the-sample-metadata"></a>
+</h3>
+<p>We use the samplesheet given to the pipelines as sample metadata. We
+join it to the sample names of the TSE, so the order of the metadata
+always matches the order of the columns.</p>
+<p>Note the <code>dplyr::</code> prefix. mia also has functions called
+<code>left_join()</code>, <code>inner_join()</code>,
+<code>full_join()</code> and <code>right_join()</code>. Because we
+loaded mia after dplyr, a plain <code>left_join()</code> would call the
+mia version, which fails on data frames.</p>
 <div class="codewrapper sourceCode" id="cb14">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">tse_phylum</span> <span class="op">&lt;-</span> <span class="fu">agglomerateByRank</span><span class="op">(</span><span class="va">tse</span>, rank <span class="op">=</span> <span class="st">"Phylum"</span><span class="op">)</span></span>
-<span><span class="va">tse_phylum</span> <span class="op">&lt;-</span> <span class="fu">transformAssay</span><span class="op">(</span><span class="va">tse_phylum</span>, assay.type <span class="op">=</span> <span class="st">"counts"</span>,</span>
-<span>                             method <span class="op">=</span> <span class="st">"relabundance"</span><span class="op">)</span></span>
-<span><span class="fu">plotAbundance</span><span class="op">(</span><span class="va">tse_phylum</span>, assay.type <span class="op">=</span> <span class="st">"relabundance"</span><span class="op">)</span></span></code></pre>
+<code class="sourceCode R"><span><span class="va">samplesheet</span> <span class="op">&lt;-</span> <span class="fu">read_csv</span><span class="op">(</span><span class="va">meta_file</span>, show_col_types <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">col_df</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>sample <span class="op">=</span> <span class="fu">colnames</span><span class="op">(</span><span class="va">tse</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu">left_join</span><span class="op">(</span><span class="fu">select</span><span class="op">(</span><span class="va">samplesheet</span>, <span class="va">sample</span>, <span class="va">run_accession</span>, <span class="va">instrument_platform</span><span class="op">)</span>,</span>
+<span>            by <span class="op">=</span> <span class="st">"sample"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">colData</span><span class="op">(</span><span class="va">tse</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu">DataFrame</span><span class="op">(</span><span class="va">col_df</span>, row.names <span class="op">=</span> <span class="va">col_df</span><span class="op">$</span><span class="va">sample</span><span class="op">)</span></span>
+<span><span class="fu">colData</span><span class="op">(</span><span class="va">tse</span><span class="op">)</span></span></code></pre>
 </div>
+<div id="always-check-that-the-samples-match" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div id="always-check-that-the-samples-match" class="callout-inner">
+<h3 class="callout-title">Always check that the samples match</h3>
+<div class="callout-content">
+<p>If a sample name in the metadata is spelled differently from the one
+in the abundance table, <code>left_join()</code> silently fills that row
+with <code>NA</code>. Check this before continuing:</p>
 <div class="codewrapper sourceCode" id="cb15">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">plotPrevalence</span><span class="op">(</span><span class="va">tse_species</span>, assay.type <span class="op">=</span> <span class="st">"relabundance"</span><span class="op">)</span></span></code></pre>
+<code class="sourceCode R"><span><span class="fu">stopifnot</span><span class="op">(</span><span class="op">!</span><span class="fu">anyNA</span><span class="op">(</span><span class="fu">colData</span><span class="op">(</span><span class="va">tse</span><span class="op">)</span><span class="op">$</span><span class="va">run_accession</span><span class="op">)</span><span class="op">)</span></span></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section><section><h2 class="section-heading" id="aggregating-filtering-and-transforming">Aggregating, filtering and transforming<a class="anchor" aria-label="anchor" href="#aggregating-filtering-and-transforming"></a>
+</h2>
+<hr class="half-width">
+<p>Three operations come before most microbiome analyses:</p>
+<ol style="list-style-type: decimal">
+<li>
+<strong>Aggregate</strong> features at the taxonomic rank of
+interest. <code>agglomerateByRank()</code> sums the abundances of all
+rows that share the same genus (or phylum, …).</li>
+<li>
+<strong>Filter</strong> features that are rare across samples.
+<code>subsetByPrevalent()</code> keeps taxa that are above a
+<code>detection</code> threshold in more than a <code>prevalence</code>
+fraction of samples. Rare taxa add noise and many zeros to downstream
+statistics.</li>
+<li>
+<strong>Transform</strong> the abundances.
+<code>transformAssay()</code> adds a new assay next to the original, for
+example relative abundance (proportions between 0 and 1).</li>
+</ol>
+<div class="codewrapper sourceCode" id="cb16">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">tse_genus</span> <span class="op">&lt;-</span> <span class="fu">agglomerateByRank</span><span class="op">(</span><span class="va">tse</span>, rank <span class="op">=</span> <span class="st">"genus"</span><span class="op">)</span></span>
+<span><span class="fu">dim</span><span class="op">(</span><span class="va">tse_genus</span><span class="op">)</span></span></code></pre>
+</div>
+<p>Keep genera with an abundance above 0.1 % in more than half of the
+samples (at least 3 of 5), then calculate relative abundance:</p>
+<div class="codewrapper sourceCode" id="cb17">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">tse_genus</span> <span class="op">&lt;-</span> <span class="fu">subsetByPrevalent</span><span class="op">(</span><span class="va">tse_genus</span>,</span>
+<span>                               assay.type <span class="op">=</span> <span class="st">"metaphlan"</span>,</span>
+<span>                               detection  <span class="op">=</span> <span class="fl">0.1</span>,</span>
+<span>                               prevalence <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span>
+<span><span class="va">tse_genus</span> <span class="op">&lt;-</span> <span class="fu">transformAssay</span><span class="op">(</span><span class="va">tse_genus</span>,</span>
+<span>                            assay.type <span class="op">=</span> <span class="st">"metaphlan"</span>,</span>
+<span>                            method     <span class="op">=</span> <span class="st">"relabundance"</span><span class="op">)</span></span>
+<span><span class="fu">dim</span><span class="op">(</span><span class="va">tse_genus</span><span class="op">)</span></span>
+<span><span class="fu">assayNames</span><span class="op">(</span><span class="va">tse_genus</span><span class="op">)</span></span></code></pre>
+</div>
+<div id="challenge-1-how-strict-is-the-filter" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<span class="callout-header">Challenge</span>
+<div id="challenge-1-how-strict-is-the-filter" class="callout-inner">
+<h3 class="callout-title">Challenge 1: How strict is the filter?</h3>
+<div class="callout-content">
+<p>Starting again from
+<code>agglomerateByRank(tse, rank = "genus")</code>, how many genera are
+kept if a genus must be above 0.1 % in <strong>all five</strong>
+samples? And in at least <strong>one</strong> sample?</p>
+<p>Hint: <code>subsetByPrevalent()</code> keeps features whose
+prevalence is <em>strictly greater</em> than <code>prevalence</code>.
+Look at the <code>include.lowest</code> argument in
+<code>?getPrevalence</code>.</p>
+</div>
+</div>
+</div>
+<div id="accordionSolution1" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
+  <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
+</button>
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div class="accordion-body">
+<div class="codewrapper sourceCode" id="cb18">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">tse_g</span> <span class="op">&lt;-</span> <span class="fu">agglomerateByRank</span><span class="op">(</span><span class="va">tse</span>, rank <span class="op">=</span> <span class="st">"genus"</span><span class="op">)</span></span>
+<span><span class="co"># All five samples</span></span>
+<span><span class="fu">nrow</span><span class="op">(</span><span class="fu">subsetByPrevalent</span><span class="op">(</span><span class="va">tse_g</span>, assay.type <span class="op">=</span> <span class="st">"metaphlan"</span>,</span>
+<span>                       detection <span class="op">=</span> <span class="fl">0.1</span>, prevalence <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>                       include.lowest <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co"># At least one sample</span></span>
+<span><span class="fu">nrow</span><span class="op">(</span><span class="fu">subsetByPrevalent</span><span class="op">(</span><span class="va">tse_g</span>, assay.type <span class="op">=</span> <span class="st">"metaphlan"</span>,</span>
+<span>                       detection <span class="op">=</span> <span class="fl">0.1</span>, prevalence <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">5</span>,</span>
+<span>                       include.lowest <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></code></pre>
+</div>
+<p>Without <code>include.lowest = TRUE</code>,
+<code>prevalence = 1</code> returns no genera, because a prevalence can
+never be strictly greater than 100 %. The stricter the prevalence
+threshold, the fewer taxa remain. No single threshold is correct: it
+depends on the number of samples and on the question you are asking.</p>
+</div>
+</div>
+</div>
+</div>
+</section><section><h2 class="section-heading" id="visualising-composition">Visualising composition<a class="anchor" aria-label="anchor" href="#visualising-composition"></a>
+</h2>
+<hr class="half-width">
+<div class="section level3">
+<h3 id="composition-bar-plot">Composition bar plot<a class="anchor" aria-label="anchor" href="#composition-bar-plot"></a>
+</h3>
+<p>At phylum level a stacked bar plot gives an overview of each
+sample:</p>
+<div class="codewrapper sourceCode" id="cb19">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">tse_phylum</span> <span class="op">&lt;-</span> <span class="fu">agglomerateByRank</span><span class="op">(</span><span class="va">tse</span>, rank <span class="op">=</span> <span class="st">"phylum"</span><span class="op">)</span></span>
+<span><span class="va">tse_phylum</span> <span class="op">&lt;-</span> <span class="fu">transformAssay</span><span class="op">(</span><span class="va">tse_phylum</span>, assay.type <span class="op">=</span> <span class="st">"metaphlan"</span>,</span>
+<span>                             method <span class="op">=</span> <span class="st">"relabundance"</span><span class="op">)</span></span>
+<span><span class="fu">plotAbundance</span><span class="op">(</span><span class="va">tse_phylum</span>, assay.type <span class="op">=</span> <span class="st">"relabundance"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Sample"</span>, y <span class="op">=</span> <span class="st">"Relative abundance"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">guides</span><span class="op">(</span>fill <span class="op">=</span> <span class="fu">guide_legend</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Phylum"</span><span class="op">)</span>,</span>
+<span>         colour <span class="op">=</span> <span class="fu">guide_legend</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Phylum"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">theme</span><span class="op">(</span>axis.text.x <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>angle <span class="op">=</span> <span class="fl">45</span>, hjust <span class="op">=</span> <span class="fl">1</span>, vjust <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code></pre>
+</div>
+</div>
+<div class="section level3">
+<h3 id="prevalence-plot">Prevalence plot<a class="anchor" aria-label="anchor" href="#prevalence-plot"></a>
+</h3>
+<p>The prevalence plot shows how many genera remain at different
+detection thresholds (x axis) and prevalence thresholds (one line per
+prevalence, here 1 to 5 of the 5 samples). It helps when choosing a
+filter. The detection values are in percent, the units of the
+<code>metaphlan</code> assay:</p>
+<div class="codewrapper sourceCode" id="cb20">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">tse_g</span> <span class="op">&lt;-</span> <span class="fu">agglomerateByRank</span><span class="op">(</span><span class="va">tse</span>, rank <span class="op">=</span> <span class="st">"genus"</span><span class="op">)</span></span>
+<span><span class="fu">plotPrevalence</span><span class="op">(</span><span class="va">tse_g</span>, assay.type <span class="op">=</span> <span class="st">"metaphlan"</span>,</span>
+<span>               detection <span class="op">=</span> <span class="fu">c</span><span class="op">(</span><span class="fl">0.01</span>, <span class="fl">0.1</span>, <span class="fl">0.5</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">5</span>, <span class="fl">10</span><span class="op">)</span>,</span>
+<span>               prevalence <span class="op">=</span> <span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span> <span class="op">/</span> <span class="fl">5</span>, include.lowest <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_x_log10</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Detection threshold (% abundance, log scale)"</span>, y <span class="op">=</span> <span class="st">"Number of genera"</span><span class="op">)</span></span></code></pre>
+</div>
+</div>
+<div class="section level3">
+<h3 id="heatmap-of-the-most-abundant-genera">Heatmap of the most abundant genera<a class="anchor" aria-label="anchor" href="#heatmap-of-the-most-abundant-genera"></a>
+</h3>
+<p><code>getTop()</code> returns the names of the most abundant
+features. <code>meltSE()</code> turns the TSE into a long data frame
+that ggplot2 can use:</p>
+<div class="codewrapper sourceCode" id="cb21">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">top_genera</span> <span class="op">&lt;-</span> <span class="fu">getTop</span><span class="op">(</span><span class="va">tse_genus</span>, top <span class="op">=</span> <span class="fl">15</span>, method <span class="op">=</span> <span class="st">"mean"</span>,</span>
+<span>                     assay.type <span class="op">=</span> <span class="st">"relabundance"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">meltSE</span><span class="op">(</span><span class="va">tse_genus</span><span class="op">[</span><span class="va">top_genera</span>, <span class="op">]</span>, assay.type <span class="op">=</span> <span class="st">"relabundance"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">mutate</span><span class="op">(</span>FeatureID <span class="op">=</span> <span class="fu">factor</span><span class="op">(</span><span class="va">FeatureID</span>, levels <span class="op">=</span> <span class="fu">rev</span><span class="op">(</span><span class="va">top_genera</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">SampleID</span>, y <span class="op">=</span> <span class="va">FeatureID</span>, fill <span class="op">=</span> <span class="va">relabundance</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_tile</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_fill_viridis_c</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Relative\nabundance"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Sample"</span>, y <span class="op">=</span> <span class="st">"Genus"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">theme</span><span class="op">(</span>axis.text.x <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>angle <span class="op">=</span> <span class="fl">45</span>, hjust <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code></pre>
+</div>
+</div>
+</section><section><h2 class="section-heading" id="importing-the-functional-profile">Importing the functional profile<a class="anchor" aria-label="anchor" href="#importing-the-functional-profile"></a>
+</h2>
+<hr class="half-width">
+<p>HUMAnN writes one pathway abundance file per sample
+(<code>*_4_pathabundance.tsv.gz</code>). Each file has two columns: the
+pathway and its abundance. Some rows are special:</p>
+<ul>
+<li>
+<code>UNMAPPED</code>: reads that did not map to any gene
+family.</li>
+<li>
+<code>UNINTEGRATED</code>: gene families that could not be assigned
+to a pathway.</li>
+<li>
+<code>PATHWAY|g__Genus.s__species</code>: stratified rows, which
+split the pathway’s abundance by contributing species.</li>
+</ul>
+<div class="codewrapper sourceCode" id="cb22">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">path_files</span> <span class="op">&lt;-</span> <span class="fu">list.files</span><span class="op">(</span><span class="va">humann_dir</span>, pattern <span class="op">=</span> <span class="st">"_4_pathabundance\\.tsv\\.gz$"</span>,</span>
+<span>                         full.names <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu">basename</span><span class="op">(</span><span class="va">path_files</span><span class="op">)</span></span>
+<span><span class="fu">read_tsv</span><span class="op">(</span><span class="va">path_files</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, show_col_types <span class="op">=</span> <span class="cn">FALSE</span>, n_max <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></code></pre>
+</div>
+<p><code>read_tsv()</code> can read all files at once. The
+<code>id</code> argument records which file each row came from. We then
+keep only the community-level (unstratified) pathways and reshape the
+table to pathways × samples. Pathways missing from a sample get an
+abundance of 0:</p>
+<div class="codewrapper sourceCode" id="cb23">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">path_long</span> <span class="op">&lt;-</span> <span class="fu">read_tsv</span><span class="op">(</span><span class="va">path_files</span>, id <span class="op">=</span> <span class="st">"file"</span>, skip <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>                      col_names <span class="op">=</span> <span class="fu">c</span><span class="op">(</span><span class="st">"pathway"</span>, <span class="st">"abundance"</span><span class="op">)</span>,</span>
+<span>                      show_col_types <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">mutate</span><span class="op">(</span>sample <span class="op">=</span> <span class="fu">sub</span><span class="op">(</span><span class="st">"_4_pathabundance\\.tsv\\.gz$"</span>, <span class="st">""</span>, <span class="fu">basename</span><span class="op">(</span><span class="va">file</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">filter</span><span class="op">(</span><span class="op">!</span><span class="fu">grepl</span><span class="op">(</span><span class="st">"|"</span>, <span class="va">pathway</span>, fixed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>         <span class="op">!</span><span class="va">pathway</span> <span class="op">%in%</span> <span class="fu">c</span><span class="op">(</span><span class="st">"UNMAPPED"</span>, <span class="st">"UNINTEGRATED"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">path_wide</span> <span class="op">&lt;-</span> <span class="va">path_long</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">select</span><span class="op">(</span><span class="va">pathway</span>, <span class="va">sample</span>, <span class="va">abundance</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">pivot_wider</span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">sample</span>, values_from <span class="op">=</span> <span class="va">abundance</span>, values_fill <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">path_mat</span> <span class="op">&lt;-</span> <span class="fu">as.matrix</span><span class="op">(</span><span class="va">path_wide</span><span class="op">[</span>, <span class="op">-</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="fu">rownames</span><span class="op">(</span><span class="va">path_mat</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">path_wide</span><span class="op">$</span><span class="va">pathway</span></span>
+<span><span class="va">path_mat</span> <span class="op">&lt;-</span> <span class="va">path_mat</span><span class="op">[</span>, <span class="fu">colnames</span><span class="op">(</span><span class="va">tse</span><span class="op">)</span><span class="op">]</span>   <span class="co"># same sample order as the taxonomic TSE</span></span>
+<span><span class="fu">dim</span><span class="op">(</span><span class="va">path_mat</span><span class="op">)</span></span></code></pre>
+</div>
+<p>Now build a TSE directly with
+<code>TreeSummarizedExperiment()</code>, reusing the sample metadata of
+the taxonomic object. The HUMAnN abundances are not normalised, so we
+add relative abundance:</p>
+<div class="codewrapper sourceCode" id="cb24">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">tse_path</span> <span class="op">&lt;-</span> <span class="fu">TreeSummarizedExperiment</span><span class="op">(</span></span>
+<span>  assays  <span class="op">=</span> <span class="fu">list</span><span class="op">(</span>abundance <span class="op">=</span> <span class="va">path_mat</span><span class="op">)</span>,</span>
+<span>  colData <span class="op">=</span> <span class="fu">colData</span><span class="op">(</span><span class="va">tse</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">tse_path</span> <span class="op">&lt;-</span> <span class="fu">transformAssay</span><span class="op">(</span><span class="va">tse_path</span>, assay.type <span class="op">=</span> <span class="st">"abundance"</span>,</span>
+<span>                           method <span class="op">=</span> <span class="st">"relabundance"</span><span class="op">)</span></span>
+<span><span class="va">tse_path</span></span></code></pre>
+</div>
+<div class="section level3">
+<h3 id="heatmap-of-the-most-abundant-pathways">Heatmap of the most abundant pathways<a class="anchor" aria-label="anchor" href="#heatmap-of-the-most-abundant-pathways"></a>
+</h3>
+<div class="codewrapper sourceCode" id="cb25">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">top_paths</span> <span class="op">&lt;-</span> <span class="fu">getTop</span><span class="op">(</span><span class="va">tse_path</span>, top <span class="op">=</span> <span class="fl">15</span>, method <span class="op">=</span> <span class="st">"mean"</span>,</span>
+<span>                    assay.type <span class="op">=</span> <span class="st">"relabundance"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">meltSE</span><span class="op">(</span><span class="va">tse_path</span><span class="op">[</span><span class="va">top_paths</span>, <span class="op">]</span>, assay.type <span class="op">=</span> <span class="st">"relabundance"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">mutate</span><span class="op">(</span>FeatureID <span class="op">=</span> <span class="fu">factor</span><span class="op">(</span><span class="va">FeatureID</span>, levels <span class="op">=</span> <span class="fu">rev</span><span class="op">(</span><span class="va">top_paths</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">SampleID</span>, y <span class="op">=</span> <span class="va">FeatureID</span>, fill <span class="op">=</span> <span class="va">relabundance</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_tile</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_fill_viridis_c</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Relative\nabundance"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Sample"</span>, y <span class="op">=</span> <span class="st">"MetaCyc pathway"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">theme</span><span class="op">(</span>axis.text.x <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>angle <span class="op">=</span> <span class="fl">45</span>, hjust <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code></pre>
+</div>
+<div id="challenge-2-which-pathways-are-most-abundant" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<span class="callout-header">Challenge</span>
+<div id="challenge-2-which-pathways-are-most-abundant" class="callout-inner">
+<h3 class="callout-title">Challenge 2: Which pathways are most
+abundant?</h3>
+<div class="callout-content">
+<p>Which five pathways have the highest mean relative abundance? Are
+they the same in every sample?</p>
+</div>
+</div>
+</div>
+<div id="accordionSolution2" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
+  <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
+</button>
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div class="accordion-body">
+<div class="codewrapper sourceCode" id="cb26">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">getTop</span><span class="op">(</span><span class="va">tse_path</span>, top <span class="op">=</span> <span class="fl">5</span>, method <span class="op">=</span> <span class="st">"mean"</span>, assay.type <span class="op">=</span> <span class="st">"relabundance"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Top pathway in each sample</span></span>
+<span><span class="fu">apply</span><span class="op">(</span><span class="fu">assay</span><span class="op">(</span><span class="va">tse_path</span>, <span class="st">"relabundance"</span><span class="op">)</span>, <span class="fl">2</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu">names</span><span class="op">(</span><span class="fu">which.max</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre>
+</div>
+<p>The most abundant pathways are core housekeeping functions
+(peptidoglycan maturation, the pentose phosphate pathway, nucleotide
+biosynthesis and glycolysis), which many gut bacteria share. The same
+pathway is the most abundant in four of the five samples, although their
+taxonomic compositions differ a lot.</p>
+</div>
+</div>
+</div>
+</div>
+<div id="accordionInstructor1" class="accordion instructor-note accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button instructor-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructor1" aria-expanded="false" aria-controls="collapseInstructor1">
+  <h3 class="accordion-header" id="headingInstructor1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div> Instructor Note </h3>
+</button>
+<div id="collapseInstructor1" class="accordion-collapse collapse" aria-labelledby="headingInstructor1" data-bs-parent="#accordionInstructor1">
+<div class="accordion-body">
+<p>Suggested timing (30 min): libraries and phyloseq vs TSE (5 min),
+MetaPhlAn import and tidying (7 min), aggregating, filtering and
+Challenge 1 (7 min), plots (4 min), HUMAnN import, heatmap and Challenge
+2 (7 min). If time is short, demonstrate the HUMAnN section and leave
+Challenge 2 for after the session.</p>
+</div>
+</div>
+</div>
 </div>
 <div id="keypoints1" class="callout keypoints">
 <div class="callout-square">
@@ -1211,16 +1723,22 @@ and calculate relative abundance</li>
 <div class="callout-inner">
 <div class="callout-content">
 <ul>
-<li>Load the packages with <code>library()</code> at the start of the
-session.</li>
-<li>A TreeSummarizedExperiment holds assays, feature data
-(<code>rowData</code>) and sample data (<code>colData</code>).</li>
-<li>Taxpasta tables are read with <code>readr</code> and assembled into
-a TreeSummarizedExperiment.</li>
+<li>A TreeSummarizedExperiment keeps the abundance tables
+(<code>assay</code>), feature information (<code>rowData</code>) and
+sample information (<code>colData</code>) together. phyloseq objects can
+be converted to and from it.</li>
+<li>
+<code>importMetaPhlAn()</code> reads a MetaPhlAn merged report, with
+the full taxonomy, into a TreeSummarizedExperiment.</li>
+<li>HUMAnN pathway tables are read with <code>readr</code>, reshaped
+with <code>tidyr</code> and assembled with
+<code>TreeSummarizedExperiment()</code>.</li>
 <li>
 <code>agglomerateByRank()</code>, <code>subsetByPrevalent()</code>
 and <code>transformAssay()</code> aggregate, filter and transform the
 data.</li>
+<li>Check that sample names match between abundance tables and metadata
+before any analysis.</li>
 </ul>
 </div>
 </div>
@@ -1229,9 +1747,10 @@ data.</li>
 Place links that you need to refer to multiple times across pages here. Delete
 any links that you are not going to use.
  -->
+</div>
 </section></section><section id="aio-06-wrap-up"><p>Content from <a href="06-wrap-up.html">Wrap up</a></p>
 <hr>
-<p>Last updated on 2026-10-27 |
+<p>Last updated on 2026-11-03 |
 
         <a href="https://github.com/cladigar/metagen-taxon-function/edit/main/episodes/06-wrap-up.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -1354,8 +1873,8 @@ any links that you are not going to use.
   "url": "melbournebioinformatics.github.io/uom-varnish/instructor/aio.html",
   "identifier": "melbournebioinformatics.github.io/uom-varnish/instructor/aio.html",
   "dateCreated": "2026-10-14",
-  "dateModified": "2026-10-27",
-  "datePublished": "2026-10-27"
+  "dateModified": "2026-11-03",
+  "datePublished": "2026-11-03"
 }
 
   </script><script>

@@ -117,11 +117,11 @@
     -->
     <a id="search-button" class="btn btn-primary" href="aio.html" role="button" aria-label="Search the All In One page">Search the All In One page</a>
   </div><!--/div.container-fluid -->
-</nav><aside class="col-md-12 lesson-progress"><div style="width: 75%" class="percentage">
-    75%
+</nav><aside class="col-md-12 lesson-progress"><div style="width: 64%" class="percentage">
+    64%
   </div>
   <div class="progress uom">
-    <div class="progress-bar uom" role="progressbar" aria-label="Lesson Progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="75" style="width: 75%">
+    <div class="progress-bar uom" role="progressbar" aria-label="Lesson Progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="64" style="width: 64%">
     </div>
   </div>
 </aside><div class="container">
@@ -326,7 +326,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Functional profiling with nf-core/funcprofiler</h1>
-        <p>Last updated on 2026-10-27 |
+        <p>Last updated on 2026-11-03 |
 
         <a href="https://github.com/cladigar/metagen-taxon-function/edit/main/episodes/04-funcprofiler.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -373,70 +373,103 @@ analysis</li>
 </ul></section><section><h2 class="section-heading" id="input-pre-processed-reads">Input: pre-processed reads<a class="anchor" aria-label="anchor" href="#input-pre-processed-reads"></a></h2>
 <hr class="half-width"><p>nf-core/funcprofiler does not perform read QC or host removal. We use
 the reads saved by taxprofiler with
-<code>--save_analysis_ready_fastqs</code>.</p>
+<code>--save_analysis_ready_fastqs</code>. We work in the same folder as
+in the previous episodes, where the database sheets and the Nectar
+config file are:</p>
 <div class="codewrapper sourceCode" id="cb1">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1" aria-label="code-block-1-1"></a><span class="bu">cd</span> ~/mbite/run</span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1" aria-label="code-block-1-2"></a><span class="fu">ls</span> ~/mbite/results/taxprofiler/analysis_ready_fastqs/</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1" aria-label="code-block-1-1"></a><span class="bu">cd</span> /mnt/data/taxprofiler</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1" aria-label="code-block-1-2"></a><span class="fu">ls</span> /mnt/data/taxprofiler/results/analysis_ready_fastqs/</span></code></pre>
 </div>
+<p>fastp names the cleaned reads
+<code>&lt;sample&gt;_&lt;run_accession&gt;_1.fastp.fastq.gz</code> and
+<code>&lt;sample&gt;_&lt;run_accession&gt;_2.fastp.fastq.gz</code>:</p>
 <div class="codewrapper sourceCode" id="cb2">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1" aria-label="code-block-2-1"></a><span class="va">READS</span><span class="op">=</span>~/mbite/results/taxprofiler/analysis_ready_fastqs</span>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1" aria-label="code-block-2-1"></a><span class="va">READS</span><span class="op">=</span>/mnt/data/taxprofiler/results/analysis_ready_fastqs</span>
 <span id="cb2-2"><a href="#cb2-2" tabindex="-1" aria-label="code-block-2-2"></a><span class="bu">echo</span> <span class="st">"sample,run_accession,instrument_platform,fastq_1,fastq_2,fasta"</span> <span class="op">&gt;</span> samplesheet_func.csv</span>
 <span id="cb2-3"><a href="#cb2-3" tabindex="-1" aria-label="code-block-2-3"></a><span class="cf">for</span> i <span class="kw">in</span> 1 2 3 4 5<span class="kw">;</span> <span class="cf">do</span></span>
-<span id="cb2-4"><a href="#cb2-4" tabindex="-1" aria-label="code-block-2-4"></a>  <span class="va">r1</span><span class="op">=</span><span class="va">$(</span><span class="fu">ls</span> <span class="va">$READS</span>/gut<span class="va">${i}</span>_<span class="pp">*</span>_1.fastq.gz<span class="va">)</span></span>
-<span id="cb2-5"><a href="#cb2-5" tabindex="-1" aria-label="code-block-2-5"></a>  <span class="va">r2</span><span class="op">=</span><span class="va">$(</span><span class="fu">ls</span> <span class="va">$READS</span>/gut<span class="va">${i}</span>_<span class="pp">*</span>_2.fastq.gz<span class="va">)</span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1" aria-label="code-block-2-4"></a>  <span class="va">r1</span><span class="op">=</span><span class="va">$READS</span>/gut<span class="va">${i}</span>_run1_1.fastp.fastq.gz</span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1" aria-label="code-block-2-5"></a>  <span class="va">r2</span><span class="op">=</span><span class="va">$READS</span>/gut<span class="va">${i}</span>_run1_2.fastp.fastq.gz</span>
 <span id="cb2-6"><a href="#cb2-6" tabindex="-1" aria-label="code-block-2-6"></a>  <span class="bu">echo</span> <span class="st">"gut</span><span class="va">${i}</span><span class="st">,run1,ILLUMINA,</span><span class="va">${r1}</span><span class="st">,</span><span class="va">${r2}</span><span class="st">,"</span> <span class="op">&gt;&gt;</span> samplesheet_func.csv</span>
 <span id="cb2-7"><a href="#cb2-7" tabindex="-1" aria-label="code-block-2-7"></a><span class="cf">done</span></span>
 <span id="cb2-8"><a href="#cb2-8" tabindex="-1" aria-label="code-block-2-8"></a><span class="fu">cat</span> samplesheet_func.csv</span></code></pre>
 </div>
-</section><section><h2 class="section-heading" id="running-the-pipeline">Running the pipeline<a class="anchor" aria-label="anchor" href="#running-the-pipeline"></a></h2>
-<hr class="half-width"><div class="codewrapper sourceCode" id="cb3">
+<p>Check that every file listed exists:</p>
+<div class="codewrapper sourceCode" id="cb3">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1" aria-label="code-block-3-1"></a><span class="ex">nextflow</span> run nf-core/funcprofiler <span class="dt">\</span></span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1" aria-label="code-block-3-2"></a>  <span class="at">-r</span> <span class="op">&lt;</span>version<span class="op">&gt;</span> <span class="dt">\</span></span>
-<span id="cb3-3"><a href="#cb3-3" tabindex="-1" aria-label="code-block-3-3"></a>  <span class="at">-profile</span> singularity <span class="dt">\</span></span>
-<span id="cb3-4"><a href="#cb3-4" tabindex="-1" aria-label="code-block-3-4"></a>  <span class="at">--input</span> samplesheet_func.csv <span class="dt">\</span></span>
-<span id="cb3-5"><a href="#cb3-5" tabindex="-1" aria-label="code-block-3-5"></a>  <span class="at">--databases</span> databases_funcprofiler.csv <span class="dt">\</span></span>
-<span id="cb3-6"><a href="#cb3-6" tabindex="-1" aria-label="code-block-3-6"></a>  <span class="at">--outdir</span> ~/mbite/results/funcprofiler <span class="dt">\</span></span>
-<span id="cb3-7"><a href="#cb3-7" tabindex="-1" aria-label="code-block-3-7"></a>  <span class="at">--run_humann_v3</span> <span class="dt">\</span></span>
-<span id="cb3-8"><a href="#cb3-8" tabindex="-1" aria-label="code-block-3-8"></a>  <span class="at">--run_eggnogmapper</span> <span class="dt">\</span></span>
-<span id="cb3-9"><a href="#cb3-9" tabindex="-1" aria-label="code-block-3-9"></a>  <span class="at">-resume</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1" aria-label="code-block-3-1"></a><span class="fu">tail</span> <span class="at">-n</span> +2 samplesheet_func.csv <span class="kw">|</span> <span class="fu">cut</span> <span class="at">-d,</span> <span class="at">-f4,5</span> <span class="kw">|</span> <span class="fu">tr</span> <span class="st">','</span> <span class="st">'\n'</span> <span class="kw">|</span> <span class="fu">xargs</span> ls <span class="at">-l</span></span></code></pre>
+</div>
+</section><section><h2 class="section-heading" id="running-the-pipeline">Running the pipeline<a class="anchor" aria-label="anchor" href="#running-the-pipeline"></a></h2>
+<hr class="half-width"><p>During the workshop we run DIAMOND, the only database in
+<code>databases_funcprofiler.csv</code>. HUMAnN 4 and eggNOG-mapper need
+much larger databases and several hours, so their outputs have been
+precomputed for you.</p>
+<div class="codewrapper sourceCode" id="cb4">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1" aria-label="code-block-4-1"></a><span class="ex">nextflow</span> run nf-core/funcprofiler <span class="dt">\</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1" aria-label="code-block-4-2"></a>  <span class="at">-r</span> 1.0.0 <span class="dt">\</span></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1" aria-label="code-block-4-3"></a>  <span class="at">-profile</span> docker <span class="dt">\</span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1" aria-label="code-block-4-4"></a>  <span class="at">-c</span> configs/nectar.config <span class="dt">\</span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1" aria-label="code-block-4-5"></a>  <span class="at">--input</span> samplesheet_func.csv <span class="dt">\</span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1" aria-label="code-block-4-6"></a>  <span class="at">--databases</span> databases_funcprofiler.csv <span class="dt">\</span></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1" aria-label="code-block-4-7"></a>  <span class="at">--outdir</span> /mnt/data/funcprofiler/results <span class="dt">\</span></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1" aria-label="code-block-4-8"></a>  <span class="at">--run_diamond</span> <span class="dt">\</span></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1" aria-label="code-block-4-9"></a>  <span class="at">-resume</span></span></code></pre>
 </div>
 </section><section><h2 class="section-heading" id="outputs">Outputs<a class="anchor" aria-label="anchor" href="#outputs"></a></h2>
-<hr class="half-width"><div class="codewrapper sourceCode" id="cb4">
+<hr class="half-width"><div class="codewrapper sourceCode" id="cb5">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1" aria-label="code-block-4-1"></a><span class="fu">ls</span> ~/mbite/results/funcprofiler</span>
-<span id="cb4-2"><a href="#cb4-2" tabindex="-1" aria-label="code-block-4-2"></a><span class="fu">ls</span> ~/mbite/results/funcprofiler/humann_v3/gut1</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1" aria-label="code-block-5-1"></a><span class="fu">ls</span> /mnt/data/funcprofiler/results</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1" aria-label="code-block-5-2"></a><span class="fu">ls</span> /mnt/data/funcprofiler/results/diamond/gut_workshop_v1</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1" aria-label="code-block-5-3"></a><span class="fu">ls</span> /mnt/data/funcprofiler/results/humann4</span></code></pre>
 </div>
 <!-- TODO: paste real output -->
+<p>All outputs are in <code>/mnt/data/funcprofiler/results/</code>:</p>
 <ul><li>MultiQC report: <code>multiqc/multiqc_report.html</code>
 </li>
-<li>Gene family abundance:
-<code>humann_v3/&lt;sample&gt;/*_genefamilies.tsv</code>
+<li>DIAMOND alignments (run during the workshop):
+<code>diamond/gut_workshop_v1/</code>
+</li>
+<li>HUMAnN 4 outputs (precomputed), one set of files per sample in
+<code>humann4/</code>:
+<ul><li>Gene family abundance:
+<code>&lt;sample&gt;_2_genefamilies.tsv.gz</code>
+</li>
+<li>Reaction abundance:
+<code>&lt;sample&gt;_3_reactions.tsv.gz</code>
 </li>
 <li>Pathway abundance:
-<code>humann_v3/&lt;sample&gt;/*_pathabundance.tsv</code>
+<code>&lt;sample&gt;_4_pathabundance.tsv.gz</code>
 </li>
-<li>Pathway coverage:
-<code>humann_v3/&lt;sample&gt;/*_pathcoverage.tsv</code>
+<li>Gene families regrouped to other functional categories:
+<code>&lt;sample&gt;_regroup.tsv.gz</code>
 </li>
-<li>Species functional profiles: stratified rows in the HUMAnN
-tables</li>
-<li>eggNOG-mapper annotations:
-<code>eggnogmapper/&lt;db_name&gt;/*.emapper.annotations</code>
+<li>Species functional profiles: stratified rows
+(<code>PATHWAY|g__Genus.s__species</code>) in the HUMAnN tables</li>
+</ul></li>
+<li>eggNOG-mapper annotations (precomputed):
+<code>eggnogmapper/*.emapper.annotations</code>
 </li>
 <li>Execution and resource reports: <code>pipeline_info/</code>
 </li>
-</ul><div class="codewrapper sourceCode" id="cb5">
+</ul><p>HUMAnN 4 does not write a separate pathway coverage table as HUMAnN 3
+did.</p>
+<div class="codewrapper sourceCode" id="cb6">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1" aria-label="code-block-5-1"></a><span class="fu">head</span> <span class="at">-n</span> 5 ~/mbite/results/funcprofiler/humann_v3/gut1/<span class="pp">*</span>_pathabundance.tsv</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" tabindex="-1" aria-label="code-block-6-1"></a><span class="fu">zcat</span> /mnt/data/funcprofiler/results/humann4/Gut_sample1_4_pathabundance.tsv.gz <span class="kw">|</span> <span class="fu">head</span> <span class="at">-n</span> 5</span></code></pre>
 </div>
+<p>The precomputed outputs use the sample names <code>Gut_sample1</code>
+to <code>Gut_sample5</code> instead of <code>gut1</code> to
+<code>gut5</code>. A copy of the HUMAnN 4 outputs is also in
+<code>/mnt/data/workshop_data/funcprofiler/humann4/</code>, which is the
+folder we use in R.</p>
 <div id="keypoints1" class="callout keypoints">
 <div class="callout-square">
 <i class="callout-icon" data-feather="key"></i>
@@ -515,8 +548,8 @@ any links that you are not going to use.
   "url": "melbournebioinformatics.github.io/uom-varnish/04-funcprofiler.html",
   "identifier": "melbournebioinformatics.github.io/uom-varnish/04-funcprofiler.html",
   "dateCreated": "2026-10-14",
-  "dateModified": "2026-10-27",
-  "datePublished": "2026-10-27"
+  "dateModified": "2026-11-03",
+  "datePublished": "2026-11-03"
 }
 
   </script><script>
