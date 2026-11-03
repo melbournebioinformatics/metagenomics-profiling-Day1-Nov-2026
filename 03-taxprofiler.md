@@ -67,11 +67,13 @@ multiqc  pipeline_info
 
 ### MultiQC report
 
-`multiqc/multiqc_report.html` contains the read QC (fastp) and classification summaries. Copy it to your laptop to open it:
+`multiqc/multiqc_report.html` contains the read QC (fastp) and classification summaries. Copy it to your laptop to open it. Run this command in a terminal on **your laptop**, not on the Nectar instance, replacing `<IP_address>` with the address of your instance:
 
 ```bash
-# PENDING TO WRITE CODE
+scp ubuntu@<IP_address>:/mnt/data/taxprofiler/results/multiqc/multiqc_report.html .
 ```
+
+This works in the Terminal on macOS and Linux and in PowerShell on Windows. If you use MobaXterm, you can instead download the file from the file browser on the left. Then open `multiqc_report.html` in your web browser.
 
 ### Taxonomic classification summaries
 The pipeline writes one folder per profiler into `results/`:
