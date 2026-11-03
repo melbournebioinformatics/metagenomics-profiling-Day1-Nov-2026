@@ -37,7 +37,7 @@ Enter the password when prompted. You should now see a prompt on the Nectar inst
 library(mia)
 library(miaViz)
 packageVersion("mia")
-list.files("/mnt/data/workshop_data")
+list.files("/data/workshop_data")
 ```
 
 You should see the mia version and the folders `funcprofiler`, `metadata` and
@@ -55,12 +55,12 @@ You should see the mia version and the folders `funcprofiler`, `metadata` and
 
 On the workshop instances:
 
-- the raw reads are in `/mnt/data/taxprofiler/input/reads/`
-- the pipeline outputs used in R are in `/mnt/data/workshop_data/`
+- the raw reads are in `/mnt/data/taxprofiler/input/reads/` on the Nextflow instance
+- the pipeline outputs used in R are in `/data/workshop_data/` on the RStudio Server
 
 ## Reference databases
 
-All databases are pre-installed under `/mnt/data/taxprofiler/databases/` and `/mnt/data/funcprofiler/databases/`:
+All databases are pre-installed on the Nextflow instance under `/mnt/data/taxprofiler/databases/` and `/mnt/data/funcprofiler/databases/`:
 
 - Kraken2 Standard-8 (`k2_standard_08_GB_20260626`)
 - MetaPhlAn `mpa_vJun23_CHOCOPhlAnSGB_202403`
