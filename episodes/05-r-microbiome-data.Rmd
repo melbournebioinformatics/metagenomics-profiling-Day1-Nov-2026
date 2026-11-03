@@ -31,12 +31,10 @@ packages can work with, and to take a first look at the samples.
 
 ### Where do we run R?
 
-We use RStudio Server on the workshop Nectar instance. The pipeline outputs are already
-in `/mnt/data/workshop_data/`, so we read them directly and do not need to copy
-anything.
+We use the workshop RStudio Server, a separate Nectar instance from the one where we ran the pipelines. Copies of the pipeline outputs are already in `/data/workshop_data/` on the RStudio Server, so we read them directly and do not need to copy anything.
 
 ```output
-/mnt/data/workshop_data
+/data/workshop_data
 ├── funcprofiler/humann4/        # HUMAnN 4 outputs, one set of files per sample
 ├── metadata/                    # samplesheets used to run the pipelines
 └── taxprofiler/                 # Taxpasta tables and merged profiler reports
@@ -68,11 +66,19 @@ packageVersion("miaViz")
 Then define where the data are:
 
 ```{r data-paths}
-data_dir  <- "/mnt/data/workshop_data"
+data_dir  <- "/data/workshop_data"
 mpa_file  <- file.path(data_dir, "taxprofiler",
                        "metaphlan_mpa_vJun23_CHOCOPhlAnSGB_202403_combined_reports.txt")
 meta_file <- file.path(data_dir, "metadata", "taxprofiler_samplesheet.csv")
 humann_dir <- file.path(data_dir, "funcprofiler", "humann4")
+
+# TRUE on the workshop RStudio Server, where all the input files are present.
+# The lesson website is built without these files, so there the chunks that
+# read the data are shown but not run.
+has_data <- file.exists(mpa_file) &&
+            file.exists(meta_file) &&
+            length(list.files(humann_dir,
+                              pattern = "_4_pathabundance\\.tsv\\.gz$")) > 0
 ```
 
 ## phyloseq and TreeSummarizedExperiment
