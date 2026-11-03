@@ -416,12 +416,19 @@ multiqc  pipeline_info  </code></pre>
 <div class="section level3">
 <h3 id="multiqc-report">MultiQC report<a class="anchor" aria-label="anchor" href="#multiqc-report"></a></h3>
 <p><code>multiqc/multiqc_report.html</code> contains the read QC (fastp)
-and classification summaries. Copy it to your laptop to open it:</p>
+and classification summaries. Copy it to your laptop to open it. Run
+this command in a terminal on <strong>your laptop</strong>, not on the
+Nectar instance, replacing <code>&lt;IP_address&gt;</code> with the
+address of your instance:</p>
 <div class="codewrapper sourceCode" id="cb5">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1" aria-label="code-block-5-1"></a><span class="co"># PENDING TO WRITE CODE</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1" aria-label="code-block-5-1"></a><span class="fu">scp</span> ubuntu@<span class="op">&lt;</span>IP_address<span class="op">&gt;</span>:/mnt/data/taxprofiler/results/multiqc/multiqc_report.html .</span></code></pre>
 </div>
+<p>This works in the Terminal on macOS and Linux and in PowerShell on
+Windows. If you use MobaXterm, you can instead download the file from
+the file browser on the left. Then open <code>multiqc_report.html</code>
+in your web browser.</p>
 </div>
 <div class="section level3">
 <h3 id="taxonomic-classification-summaries">Taxonomic classification summaries<a class="anchor" aria-label="anchor" href="#taxonomic-classification-summaries"></a></h3>

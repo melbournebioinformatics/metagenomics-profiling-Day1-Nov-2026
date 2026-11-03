@@ -217,7 +217,9 @@
 <li><a href="#shotgun-metagenomics-and-marker-gene-sequencing">Shotgun metagenomics and marker-gene sequencing</a></li>
 <li><a href="#taxonomic-and-functional-profiling">Taxonomic and functional profiling</a></li>
 <li><a href="#the-workshop-dataset">The workshop dataset</a></li>
+<li><a href="#downloading-the-data-and-checking-its-integrity">Downloading the data and checking its integrity</a></li>
 <li><a href="#first-look-at-the-reads">First look at the reads</a></li>
+<li><a href="#how-many-reads-are-there">How many reads are there?</a></li>
         </ul></div><!--/div.accordion-body-->
     </div><!--/div.accordion-collapse-->
 
@@ -390,17 +392,200 @@ and their abundance.</li>
 <hr class="half-width"><p>5 simulated human gut metagenomes from Sun, Huang et al. (2021), with
 paired-end reads, ground-truth abundance tables and sample metadata. The
 true composition of each sample is known.</p>
-</section><section><h2 class="section-heading" id="first-look-at-the-reads">First look at the reads<a class="anchor" aria-label="anchor" href="#first-look-at-the-reads"></a></h2>
-<hr class="half-width"><div class="codewrapper sourceCode" id="cb1">
+</section><section><h2 class="section-heading" id="downloading-the-data-and-checking-its-integrity">Downloading the data and checking its integrity<a class="anchor" aria-label="anchor" href="#downloading-the-data-and-checking-its-integrity"></a></h2>
+<hr class="half-width"><p>The reads are already on the Nectar instance, so we do not download
+them today. With your own projects you will usually start by downloading
+the data from a public repository, and the first thing to do after a
+download is to check that the files arrived complete and unchanged.</p>
+<div id="we-do-not-run-this-today" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div id="we-do-not-run-this-today" class="callout-inner">
+<h3 class="callout-title">We do not run this today</h3>
+<div class="callout-content">
+<p>The commands in this section show how you would download and check
+the data in any other situation. The full dataset is about 6.5 GB, which
+would take too long during the workshop.</p>
+</div>
+</div>
+</div>
+<div class="section level3">
+<h3 id="downloading-with-wget">Downloading with <code>wget</code>
+<a class="anchor" aria-label="anchor" href="#downloading-with-wget"></a></h3>
+<p>The full gut samples are in the figshare dataset <a href="https://doi.org/10.6084/m9.figshare.12234947.v1" class="external-link">Gut_sample</a>
+(figshare project 79916). Each file on figshare has its own download
+link, which you can copy from the file’s download button.
+<code>wget</code> downloads a file from a link, and <code>-O</code> sets
+the name of the saved file:</p>
+<div class="codewrapper sourceCode" id="cb1">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1" aria-label="code-block-1-1"></a><span class="co"># PENDING TO WRITE CODE</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1" aria-label="code-block-1-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ~/raw_data <span class="kw">&amp;&amp;</span> <span class="bu">cd</span> ~/raw_data</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1" aria-label="code-block-1-2"></a><span class="fu">wget</span> <span class="at">-O</span> Gut_sample1.fq.gz <span class="st">"https://figshare.com/ndownloader/files/&lt;file_id&gt;"</span></span></code></pre>
 </div>
+<p>For sequencing data from the European Nucleotide Archive (ENA), the
+<a href="https://www.ebi.ac.uk/ena/browser/" class="external-link">ENA browser</a> lists the
+FTP link of every FASTQ file of a project, and <code>wget</code> works
+the same way.</p>
+</div>
+<div class="section level3">
+<h3 id="what-an-md5-checksum-is">What an MD5 checksum is<a class="anchor" aria-label="anchor" href="#what-an-md5-checksum-is"></a></h3>
+<p>An MD5 checksum is a 32-character code calculated from the content of
+a file. If a single byte of the file changes, for example because a
+download was cut short, the checksum changes completely. Repositories
+publish the checksum of each file they host, so you can calculate the
+checksum of your copy and compare the two. figshare shows the MD5 of
+each file on the dataset page and in its API, and ENA lists it in the
+<code>fastq_md5</code> column of a project’s file report.</p>
+<p><code>md5sum</code> calculates the checksum of one or more files:</p>
 <div class="codewrapper sourceCode" id="cb2">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1" aria-label="code-block-2-1"></a><span class="co"># number of reads in a file (lines / 4)</span></span>
-<span id="cb2-2"><a href="#cb2-2" tabindex="-1" aria-label="code-block-2-2"></a><span class="co"># PENDING TO WRITE CODE</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1" aria-label="code-block-2-1"></a><span class="fu">md5sum</span> Gut_sample1.fq.gz</span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>&lt;32-character checksum&gt;  Gut_sample1.fq.gz</code></pre>
+</div>
+</div>
+<div class="section level3">
+<h3 id="checking-many-files-at-once">Checking many files at once<a class="anchor" aria-label="anchor" href="#checking-many-files-at-once"></a></h3>
+<p>Put the published checksums in a text file, one line per file, with
+the checksum, two spaces and the file name:</p>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>&lt;checksum of file 1&gt;  Gut_sample1.fq.gz
+&lt;checksum of file 2&gt;  Gut_sample2.fq.gz</code></pre>
+</div>
+<p>Then <code>md5sum -c</code> recalculates the checksum of every file
+in the list and compares it with the published one:</p>
+<div class="codewrapper sourceCode" id="cb5">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1" aria-label="code-block-5-1"></a><span class="fu">md5sum</span> <span class="at">-c</span> md5sums.txt</span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code><span><span class="va">Gut_sample1.fq.gz</span><span class="op">:</span> <span class="va">OK</span></span>
+<span><span class="va">Gut_sample2.fq.gz</span><span class="op">:</span> <span class="va">OK</span></span></code></pre>
+</div>
+<p>Any file reported as <code>FAILED</code> is damaged or incomplete and
+should be downloaded again. Keep <code>md5sums.txt</code> with your raw
+data: it lets you, or anyone else, check later that the files have not
+changed.</p>
+</div>
+</section><section><h2 class="section-heading" id="first-look-at-the-reads">First look at the reads<a class="anchor" aria-label="anchor" href="#first-look-at-the-reads"></a></h2>
+<hr class="half-width"><p>The reads for this workshop are already on the Nectar instance, in
+<code>/mnt/data/rawreads/</code>. There are two compressed FASTQ files
+per sample: <code>_R1</code> and <code>_R2</code> hold the two reads of
+each pair.</p>
+<div id="challenge-1-look-inside-a-fastq-file" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<span class="callout-header">Challenge</span>
+<div id="challenge-1-look-inside-a-fastq-file" class="callout-inner">
+<h3 class="callout-title">Challenge 1: Look inside a FASTQ file</h3>
+<div class="callout-content">
+<ol style="list-style-type: decimal"><li>List the files in <code>/mnt/data/rawreads/</code> and check their
+sizes.</li>
+<li>Print the first two reads of
+<code>Gut_sample1_sub_R1.fastq.gz</code>. The files are compressed, so
+use <code>zcat</code> instead of <code>cat</code>.</li>
+</ol></div>
+</div>
+</div>
+<div id="accordionSolution1" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
+  <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
+</button>
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div class="accordion-body">
+<div class="codewrapper sourceCode" id="cb7">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" tabindex="-1" aria-label="code-block-7-1"></a><span class="fu">ls</span> <span class="at">-lh</span> /mnt/data/rawreads/</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1" aria-label="code-block-7-2"></a><span class="fu">zcat</span> /mnt/data/rawreads/Gut_sample1_sub_R1.fastq.gz <span class="kw">|</span> <span class="fu">head</span> <span class="at">-n</span> 8</span></code></pre>
+</div>
+<p>Each read takes four lines: a header starting with <code>@</code>,
+the bases, a <code>+</code> separator, and the quality of each base as
+one character per base.</p>
+</div>
+</div>
+</div>
+</div>
+</section><section><h2 class="section-heading" id="how-many-reads-are-there">How many reads are there?<a class="anchor" aria-label="anchor" href="#how-many-reads-are-there"></a></h2>
+<hr class="half-width"><p>Each read takes four lines, so the number of reads in a file is the
+number of lines divided by four:</p>
+<div class="codewrapper sourceCode" id="cb8">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" tabindex="-1" aria-label="code-block-8-1"></a><span class="bu">echo</span> <span class="va">$((</span> <span class="va">$(</span><span class="fu">zcat</span> /mnt/data/rawreads/Gut_sample1_sub_R1.fastq.gz <span class="kw">|</span> <span class="fu">wc</span> <span class="at">-l</span><span class="va">)</span> <span class="op">/</span> <span class="dv">4</span> <span class="va">))</span></span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code><span><span class="fl">100000</span></span></code></pre>
+</div>
+<p>A loop does the same for every R1 file:</p>
+<div class="codewrapper sourceCode" id="cb10">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" tabindex="-1" aria-label="code-block-10-1"></a><span class="cf">for</span> f <span class="kw">in</span> /mnt/data/rawreads/<span class="pp">*</span>_sub_R1.fastq.gz<span class="kw">;</span> <span class="cf">do</span></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1" aria-label="code-block-10-2"></a>  <span class="bu">echo</span> <span class="st">"</span><span class="va">$(</span><span class="fu">basename</span> <span class="st">"</span><span class="va">$f</span><span class="st">"</span><span class="va">)</span><span class="st"> </span><span class="va">$((</span> <span class="va">$(</span><span class="fu">zcat</span> <span class="st">"</span><span class="va">$f</span><span class="st">"</span> <span class="kw">|</span> <span class="fu">wc</span> <span class="at">-l</span><span class="va">)</span> <span class="op">/</span> <span class="dv">4</span> <span class="va">))</span><span class="st">"</span></span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1" aria-label="code-block-10-3"></a><span class="cf">done</span></span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>Gut_sample1_sub_R1.fastq.gz 100000
+Gut_sample2_sub_R1.fastq.gz 100000
+Gut_sample3_sub_R1.fastq.gz 100000
+Gut_sample4_sub_R1.fastq.gz 100000
+Gut_sample5_sub_R1.fastq.gz 100000</code></pre>
+</div>
+<div id="challenge-2-do-the-pairs-match" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<span class="callout-header">Challenge</span>
+<div id="challenge-2-do-the-pairs-match" class="callout-inner">
+<h3 class="callout-title">Challenge 2: Do the pairs match?</h3>
+<div class="callout-content">
+<p>The R1 and R2 files of a sample must contain the same number of
+reads, because each read in R1 has its partner in R2. Check this for
+every sample.</p>
+</div>
+</div>
+</div>
+<div id="accordionSolution2" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
+  <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
+</button>
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div class="accordion-body">
+<div class="codewrapper sourceCode" id="cb12">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" tabindex="-1" aria-label="code-block-12-1"></a><span class="cf">for</span> r1 <span class="kw">in</span> /mnt/data/rawreads/<span class="pp">*</span>_sub_R1.fastq.gz<span class="kw">;</span> <span class="cf">do</span></span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1" aria-label="code-block-12-2"></a>  <span class="va">r2</span><span class="op">=</span><span class="va">${r1</span><span class="op">/</span><span class="ss">_R1</span><span class="op">/</span>_R2<span class="va">}</span></span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1" aria-label="code-block-12-3"></a>  <span class="va">n1</span><span class="op">=</span><span class="va">$((</span> <span class="va">$(</span><span class="fu">zcat</span> <span class="st">"</span><span class="va">$r1</span><span class="st">"</span> <span class="kw">|</span> <span class="fu">wc</span> <span class="at">-l</span><span class="va">)</span> <span class="op">/</span> <span class="dv">4</span> <span class="va">))</span></span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1" aria-label="code-block-12-4"></a>  <span class="va">n2</span><span class="op">=</span><span class="va">$((</span> <span class="va">$(</span><span class="fu">zcat</span> <span class="st">"</span><span class="va">$r2</span><span class="st">"</span> <span class="kw">|</span> <span class="fu">wc</span> <span class="at">-l</span><span class="va">)</span> <span class="op">/</span> <span class="dv">4</span> <span class="va">))</span></span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1" aria-label="code-block-12-5"></a>  <span class="bu">echo</span> <span class="st">"</span><span class="va">$(</span><span class="fu">basename</span> <span class="st">"</span><span class="va">$r1</span><span class="st">"</span> _sub_R1.fastq.gz<span class="va">)</span><span class="st"> R1=</span><span class="va">$n1</span><span class="st"> R2=</span><span class="va">$n2</span><span class="st">"</span></span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1" aria-label="code-block-12-6"></a><span class="cf">done</span></span></code></pre>
+</div>
+<p>Every sample should show the same number for R1 and R2. A difference
+means one of the files is truncated or corrupted.</p>
+</div>
+</div>
+</div>
 </div>
 <div id="keypoints1" class="callout keypoints">
 <div class="callout-square">
